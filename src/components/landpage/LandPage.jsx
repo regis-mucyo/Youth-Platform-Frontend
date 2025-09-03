@@ -4,6 +4,7 @@ import HowItWorks from "./HowItWorks";
 import Trust from "./Trust";
 import Testimonials from "./Testimonials";
 import WhyJoinUs from "./WhyJoinUs";
+import Footer from "./Footer";
 export default function LandPage() {
   return (
     <>
@@ -13,6 +14,7 @@ export default function LandPage() {
       <Trust />
       <Testimonials />
       <WhyJoinUs />
+      <Footer />
     </>
   );
 }
