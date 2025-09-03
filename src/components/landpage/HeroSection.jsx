@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useNavigate } from "react-router-dom";
+
 const HeroSection = ({ role = "mentee" }) => {
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-16 md:py-24">
@@ -28,13 +30,33 @@ const HeroSection = ({ role = "mentee" }) => {
 
         {/* CTA Button */}
         <div className="flex justify-center">
-          <button className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
-            {role === "mentee" ? "Start Your Journey" : "Become a Mentor"}
-          </button>
+          <HeroCTA role={role} />
         </div>
       </div>
     </section>
   );
 };
+
+function HeroCTA({ role }) {
+  const navigate = useNavigate();
+  if (role === "mentee") {
+    return (
+      <button
+        onClick={() => navigate('/register')}
+        className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+      >
+        Start Your Journey
+      </button>
+    );
+  }
+  return (
+    <button
+      onClick={() => navigate('/mentor')}
+      className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+    >
+      Become a Mentor
+    </button>
+  );
+}
 
 export default HeroSection;
