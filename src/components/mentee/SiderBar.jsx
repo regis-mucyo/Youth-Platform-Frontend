@@ -1,4 +1,3 @@
-import React from "react";
 import {
   LayoutDashboard,
   Calendar,
@@ -10,46 +9,54 @@ import {
   X,
 } from "lucide-react";
 
-const Sidebar = ({ open, setOpen }) => {
+const navigation = [
+  { text: "Dashboard", icon: LayoutDashboard },
+  { text: "Sessions", icon: Calendar },
+  { text: "Messages", icon: MessageCircle, badge: "3" },
+  { text: "My Connections", icon: Users },
+  { text: "Market Linkage", icon: ShoppingBag },
+  { text: "My Contribution", icon: Trophy },
+];
+
+const Sidebar = ({ open, setOpen, activeItem }) => {
   return (
     <>
-      {/* Mobile overlay */}
       {open && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-40 sm:hidden"
           onClick={() => setOpen(false)}
         />
       )}
-
-      {/* Sidebar */}
       <aside
         className={`fixed sm:static inset-y-0 left-0 w-64 bg-white shadow-lg z-50 transform transition-transform duration-300
           ${open ? "translate-x-0" : "-translate-x-full sm:translate-x-0"}`}
       >
-        {/* Close (mobile only) */}
         <div className="sm:hidden flex justify-end p-4">
           <button onClick={() => setOpen(false)}>
             <X className="w-6 h-6 text-gray-600" />
           </button>
         </div>
 
-        {/* Logo & Subtitle */}
+  
         <div className="px-6 py-4">
           <h1 className="text-green-600 font-bold text-xl">ElevateLink</h1>
           <p className="text-sm text-gray-500">Mentorship Platform</p>
         </div>
 
-        {/* Navigation */}
+       
         <nav className="mt-6 space-y-2">
-          <SidebarItem icon={<LayoutDashboard />} text="Dashboard" />
-          <SidebarItem icon={<Calendar />} text="Sessions" active />
-          <SidebarItem icon={<MessageCircle />} text="Messages" badge="3" />
-          <SidebarItem icon={<Users />} text="My Connections" />
-          <SidebarItem icon={<ShoppingBag />} text="Market Linkage" />
-          <SidebarItem icon={<Trophy />} text="My Contribution" />
+          {navigation.map(({ text, icon: Icon, badge }) => (
+            <SidebarItem
+              key={text}
+              icon={<Icon />}
+              text={text}
+              badge={badge}
+              active={activeItem === text}
+            />
+          ))}
         </nav>
 
-        {/* User Profile */}
+      
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t flex items-center space-x-3">
           <img
             src="https://randomuser.me/api/portraits/men/32.jpg"
@@ -69,7 +76,7 @@ const Sidebar = ({ open, setOpen }) => {
 
 const SidebarItem = ({ icon, text, active, badge }) => (
   <div
-    className={`flex items-center px-6 py-3 cursor-pointer  ${
+    className={`flex items-center px-6 py-3 cursor-pointer ${
       active ? "bg-green-500 text-white rounded-r-full" : "text-gray-700"
     }`}
   >
