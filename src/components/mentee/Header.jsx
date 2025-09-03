@@ -1,7 +1,7 @@
 import React from "react";
 import { Bell, Plus, Menu } from "lucide-react";
 
-const Header = ({ setSidebarOpen }) => {
+const Header = ({ setSidebarOpen,dashboard,description }) => {
   return (
     <header className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 sm:px-6 py-4 bg-white shadow">
       {/* Left: Page title & subtitle */}
@@ -13,9 +13,9 @@ const Header = ({ setSidebarOpen }) => {
           <Menu className="w-6 h-6 text-gray-700" />
         </button>
         <div>
-          <h1 className="text-xl sm:text-2xl font-bold">Sessions</h1>
+          <h1 className="text-xl sm:text-2xl font-bold">{dashboard}</h1>
           <p className="text-sm text-gray-500">
-            Manage your upcoming, pending, and completed mentorship sessions.
+            {description}
           </p>
         </div>
       </div>
