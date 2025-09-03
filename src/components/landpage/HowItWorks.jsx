@@ -1,5 +1,5 @@
-import React from 'react';
-import { UserPlus, Users, TrendingUp } from 'lucide-react';
+import React from "react";
+import { UserPlus, Users, TrendingUp } from "lucide-react";
 
 const HowItWorks = () => {
   const steps = [
@@ -7,20 +7,22 @@ const HowItWorks = () => {
       icon: <UserPlus className="w-10 h-10 text-white" />,
       title: "Sign Up",
       description: "Create your profile and tell us about your goals",
-      stepNumber: "01"
+      stepNumber: "01",
     },
     {
       icon: <Users className="w-10 h-10 text-white" />,
       title: "Get Matched",
-      description: "We connect you with the perfect mentor based on your needs",
-      stepNumber: "02"
+      description:
+        "Get matched with a Rwandan professional in the diaspora who shares your field and values",
+      stepNumber: "02",
     },
     {
       icon: <TrendingUp className="w-10 h-10 text-white" />,
       title: "Grow",
-      description: "Learn, develop, and achieve your potential with expert guidance",
-      stepNumber: "03"
-    }
+      description:
+        "Learn, develop, and achieve your potential with expert guidance",
+      stepNumber: "03",
+    },
   ];
 
   return (
@@ -46,17 +48,17 @@ const HowItWorks = () => {
                 <div className="absolute -top-4 -left-4 bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
                   {step.stepNumber}
                 </div>
-                
+
                 {/* Icon Container */}
                 <div className="bg-green-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg">
                   {step.icon}
                 </div>
-                
+
                 {/* Title */}
                 <h3 className="text-2xl font-bold text-gray-900 mb-4">
                   {step.title}
                 </h3>
-                
+
                 {/* Description */}
                 <p className="text-gray-600 leading-relaxed">
                   {step.description}
