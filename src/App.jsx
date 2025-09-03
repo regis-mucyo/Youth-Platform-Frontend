@@ -1,9 +1,10 @@
-import LandPage from "./components/landpage/LandPage";
-import ElevateLinkDashboard from "./components/mentee/dashboard";
-export default function App() {
+import SessionPage from "./components/mentee/SessionPage";
+function App() {
   return (
     <>
-      <ElevateLinkDashboard />
+      <SessionPage />
     </>
   );
 }
+
+export default App;
