@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -48,9 +47,9 @@ const Header = () => {
             <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors duration-200">
               Become a Mentor
             </button>
-            <Link to="/register" className="bg-green-500 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200">
+            <button className="bg-green-500 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200">
               Sign Up
-            </Link>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -78,7 +77,7 @@ const Header = () => {
                   {item.name}
                 </a>
               ))}
-
+              
               {/* Mobile Action Buttons */}
               <div className="pt-4 space-y-2">
                 <button className="w-full bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-colors duration-200">
@@ -87,9 +86,9 @@ const Header = () => {
                 <button className="w-full bg-gray-100 text-gray-700 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-200 transition-colors duration-200">
                   Become a Mentor
                 </button>
-                <Link to="/register" className="w-full bg-green-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200">
+                <button className="w-full bg-green-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200">
                   Sign Up
-                </Link>
+                </button>
               </div>
             </div>
           </div>
