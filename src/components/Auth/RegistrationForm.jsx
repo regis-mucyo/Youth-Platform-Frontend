@@ -82,7 +82,7 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin }) => {
                 setCurrentStep(currentStep + 1)
             } else {
                 onRegistrationComplete(formData)
-                navigate('/exam-selection');
+                navigate('/exm');
             }
         }
     }
