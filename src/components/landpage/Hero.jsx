@@ -1,6 +1,6 @@
 import React from 'react';
 
-const HeroSection = ({ onGetStarted }) => {
+const HeroSection = () => {
   return (
     <section className="bg-gradient-to-b from-gray-50 to-white py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -20,7 +20,7 @@ const HeroSection = ({ onGetStarted }) => {
           
           {/* Call-to-Action Button */}
           <div className="flex justify-center">
-            <button onClick={onGetStarted} className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
+            <button className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
               Start Your Journey
             </button>
           </div>

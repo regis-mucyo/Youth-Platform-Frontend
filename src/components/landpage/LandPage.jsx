@@ -4,11 +4,11 @@ import HowItWorks from "./HowItWorks";
 import Trust from "./Trust";
 import Testimonials from "./Testimonials";
 import WhyJoinUs from "./WhyJoinUs";
-export default function LandPage({ onGetStarted }) {
+export default function LandPage() {
   return (
     <>
       <Header />
-      <HeroSection onGetStarted={onGetStarted} />
+      <HeroSection />
       <HowItWorks />
       <Trust />
       <Testimonials />
