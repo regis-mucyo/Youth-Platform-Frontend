@@ -1,0 +1,4 @@
+- [x] Modify RegistrationForm.jsx to accept `role` prop and change title to "Join as a Mentor" if role is "mentor"
+- [x] Update App.jsx RegisterRoute to extract role from query params and pass to RegistrationForm
+- [x] Update Header.jsx to link "Sign Up" to /register?role=mentee or /register?role=mentor based on currentRole
+- [x] Test the changes (run npm run dev and verify navigation)
