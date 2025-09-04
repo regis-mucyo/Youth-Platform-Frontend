@@ -1,14 +1,25 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { ChevronRight } from "lucide-react"
 
 const QuestionCard = ({ question, onAnswer, selectedAnswer, onNext, isLastQuestion }) => {
     const [localSelected, setLocalSelected] = useState(null)
 
+    // Sync local selection with parent when question or external selection changes
+    useEffect(() => {
+        setLocalSelected(selectedAnswer ?? null)
+    }, [question, selectedAnswer])
+
     const handleOptionSelect = (optionIndex) => {
-        setLocalSelected(optionIndex)
-        onAnswer(optionIndex)
+        // Toggle selection: clicking the same option again will deselect it
+        if (localSelected === optionIndex) {
+            setLocalSelected(null)
+            onAnswer(null)
+        } else {
+            setLocalSelected(optionIndex)
+            onAnswer(optionIndex)
+        }
     }
 
     const handleNext = () => {
@@ -27,17 +38,17 @@ const QuestionCard = ({ question, onAnswer, selectedAnswer, onNext, isLastQuesti
                         <button
                             key={index}
                             onClick={() => handleOptionSelect(index)}
-                            className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-500/20 ${localSelected === index
-                                ? "border-green-500 bg-green-50 text-gray-800 shadow-md transform scale-[1.02]"
-                                : "border-gray-200 bg-gray-50 text-gray-700"
+                            aria-pressed={localSelected === index}
+                            className={`w-full text-left p-5 rounded-xl border-2 transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500/30 ${localSelected === index
+                                ? "border-green-500 bg-green-50 text-gray-900 shadow-md"
+                                : "border-gray-200 bg-white text-gray-700 hover:border-green-300 hover:bg-green-50"
                                 }`}
                         >
                             <div className="flex items-center gap-4">
                                 <div
-                                    className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${localSelected === index ? "border-green-500 bg-green-500" : "border-gray-300"
-                                        }`}
+                                    className={`w-8 h-8 rounded-full flex items-center justify-center font-semibold ${localSelected === index ? "bg-green-500 text-white" : "bg-white text-gray-600 border border-gray-300"}`}
                                 >
-                                    {localSelected === index && <div className="w-2 h-2 bg-white rounded-full"></div>}
+                                    {String.fromCharCode(65 + index)}
                                 </div>
                                 <span className="text-base font-medium leading-relaxed">{option}</span>
                             </div>

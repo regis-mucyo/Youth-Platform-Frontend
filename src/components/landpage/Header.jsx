@@ -73,7 +73,7 @@ const Header = ({ currentRole = "mentee" }) => {
               Log In
             </Link>
             <Link
-              to="/register"
+              to={`/register?role=${currentRole}`}
               className="bg-green-500 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200"
             >
               Sign Up
@@ -138,7 +138,7 @@ const Header = ({ currentRole = "mentee" }) => {
                   Log In
                 </Link>
                 <Link
-                  to="/register"
+                  to={`/register?role=${currentRole}`}
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full bg-green-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200"
                 >

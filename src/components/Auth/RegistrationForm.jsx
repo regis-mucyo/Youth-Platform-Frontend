@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom';
 
-const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin }) => {
+const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "mentee" }) => {
     const [currentStep, setCurrentStep] = useState(1)
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
@@ -82,7 +82,7 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin }) => {
                 setCurrentStep(currentStep + 1)
             } else {
                 onRegistrationComplete(formData)
-                navigate('/exm');
+                navigate('/career-selection');
             }
         }
     }
@@ -98,7 +98,7 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin }) => {
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="bg-green-500 text-white p-8 rounded-t-2xl text-center">
-                    <h1 className="text-2xl font-bold mb-2">Join as a Mentee</h1>
+                    <h1 className="text-2xl font-bold mb-2">Join as a {role === "mentor" ? "Mentor" : "Mentee"}</h1>
                     <p className="text-green-100 mb-6">Let's get you started on your journey</p>
 
                     {/* Step Indicator */}

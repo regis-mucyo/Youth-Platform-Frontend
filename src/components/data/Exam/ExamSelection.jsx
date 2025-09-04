@@ -17,6 +17,16 @@ const countQuestions = (exam, level) => {
 const ExamSelection = ({ onSelectCareer, userProfile }) => {
     const careerPaths = getFilteredCareerPaths(userProfile)
 
+    const getPersisted = (careerId) => {
+        try {
+            const key = `examResults:${careerId}:${userProfile?.experienceLevel}`
+            const raw = localStorage.getItem(key)
+            return raw ? JSON.parse(raw) : null
+        } catch {
+            return null
+        }
+    }
+
     const getDifficultyLevel = () => {
         const experienceMapping = {
             Beginner: "Entry Level",
@@ -54,9 +64,14 @@ const ExamSelection = ({ onSelectCareer, userProfile }) => {
                                     <div className="p-6">
                                         <div className="flex items-center justify-between mb-2">
                                             <h3 className="text-xl font-semibold text-gray-800">{career.title}</h3>
-                                            {userProfile?.fieldOfWork && (
-                                                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Recommended</span>
-                                            )}
+                                            <div className="flex items-center gap-2">
+                                                {userProfile?.fieldOfWork && (
+                                                    <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">Recommended</span>
+                                                )}
+                                                {getPersisted(career.id)?.passed && (
+                                                    <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">Completed</span>
+                                                )}
+                                            </div>
                                         </div>
                                         <p className="text-gray-600 text-sm mb-6">{career.description}</p>
 
@@ -82,13 +97,23 @@ const ExamSelection = ({ onSelectCareer, userProfile }) => {
                                         {/* Conditional rendering for assessment button */}
                                         {countQuestions(career.technical, userProfile?.experienceLevel) > 0 &&
                                             countQuestions(career.soft, userProfile?.experienceLevel) > 0 ? (
-                                            <button
-                                                onClick={() => onSelectCareer(career.id)}
-                                                className="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
-                                            >
-                                                <Play className="w-4 h-4" />
-                                                Start Complete Assessment
-                                            </button>
+                                            getPersisted(career.id)?.passed ? (
+                                                <button
+                                                    onClick={() => onSelectCareer(career.id)}
+                                                    className="w-full bg-blue-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-600 transition-colors flex items-center justify-center gap-2"
+                                                >
+                                                    <Play className="w-4 h-4" />
+                                                    View Results
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={() => onSelectCareer(career.id)}
+                                                    className="w-full bg-green-500 text-white py-3 px-4 rounded-lg font-medium hover:bg-green-600 transition-colors flex items-center justify-center gap-2"
+                                                >
+                                                    <Play className="w-4 h-4" />
+                                                    Start Complete Assessment
+                                                </button>
+                                            )
                                         ) : (
                                             <div className="text-center text-sm text-red-500 py-3">
                                                 Assessments not yet available for your experience level.
