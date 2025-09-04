@@ -7,31 +7,31 @@ const users = [
     id: "mentee1",
     name: "Alice Niyonsaba",
     role: "mentee",
-    avatar: "https://via.placeholder.com/40?text=A",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: "mentee2",
     name: "Eric Mugiraneza",
     role: "mentee",
-    avatar: "https://via.placeholder.com/40?text=E",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: "mentor1",
     name: "Dr. Sarah Uwase",
     role: "mentor",
-    avatar: "https://via.placeholder.com/40?text=S",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: "mentor2",
     name: "Prof. Jean Bosco",
     role: "mentor",
-    avatar: "https://via.placeholder.com/40?text=J",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
   {
     id: "mentor3",
     name: "Coach Diane",
     role: "mentor",
-    avatar: "https://via.placeholder.com/40?text=D",
+    avatar: "https://randomuser.me/api/portraits/men/32.jpg",
   },
 ];
 
@@ -90,7 +90,7 @@ const ChatApp = () => {
           <Header
             setSidebarOpen={setSidebarOpen}
             dashboard={"My Messages"}
-            description={"s"}
+            description={"connect and communicate with your mentors and mentee"}
           />
           <main className="p-4 sm:p-6 overflow-y-auto">
             <div className="flex h-xl font-[Poppins] bg-gray-100">

@@ -14,7 +14,7 @@ function SessionPage() {
       <div className="flex flex-col flex-1">
         <Header
           setSidebarOpen={setSidebarOpen}
-          dashboard={"My Connection"}
+          dashboard={"Session"}
           description={
             "Manage your upcoming,pending and completed mentorship sessions."
           }
