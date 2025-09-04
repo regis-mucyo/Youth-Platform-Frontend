@@ -1,10 +1,14 @@
 import SessionPage from "./components/mentee/SessionPage";
-import Myconnection from "./components/mentee/Myconnection";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 function App() {
   return (
-    <>
-      <Myconnection/>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/mentee/connection" element={<MyConnection />} />
+        <Route path="/" element={<SessionPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
