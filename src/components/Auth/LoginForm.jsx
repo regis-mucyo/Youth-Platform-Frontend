@@ -55,6 +55,9 @@ const LoginForm = ({ onLoginComplete, onSwitchToRegister }) => {
                 experienceLevel: "Senior",
             }
 
+            // Store user profile for exam system
+            localStorage.setItem('userProfile', JSON.stringify(mockUserProfile));
+
             setIsLoading(false)
             onLoginComplete(mockUserProfile)
         }, 1500)

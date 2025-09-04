@@ -525,16 +525,19 @@ export const getFilteredCareerPaths = (userProfile) => {
   const fieldMapping = {
     "Software Development": ["software-developer"],
     "Data Science": ["data-scientist"],
-    "Product Management": ["product-manager"],
-    "Digital Marketing": ["digital-marketer"],
-    "UI/UX Design": ["ui-ux-designer"],
-    Cybersecurity: ["cybersecurity-analyst"],
-    "Business Analysis": ["business-analyst"],
-    "DevOps Engineering": ["software-developer"],
+    "Product Management": ["software-developer"], // Map to software-developer for now
+    "Digital Marketing": ["software-developer"], // Map to software-developer for now
+    "UI/UX Design": ["software-developer"], // Map to software-developer for now
+    Cybersecurity: ["software-developer"], // Map to software-developer for now
+    "Business Analysis": ["data-scientist"], // Map to data-scientist for now
+    "DevOps Engineering": ["software-developer"], // Map to software-developer for now
   };
 
   const relevantCareers = fieldMapping[userProfile.fieldOfWork] || [];
-  return relevantCareers.length > 0
+  const filtered = relevantCareers.length > 0
     ? allPaths.filter((career) => relevantCareers.includes(career.id))
     : allPaths;
+
+  // If no careers match, show all available careers
+  return filtered.length > 0 ? filtered : allPaths;
 };
