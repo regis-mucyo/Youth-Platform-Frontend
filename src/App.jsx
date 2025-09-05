@@ -6,11 +6,13 @@ import Market from "./components/mentee/Market";
 import Report from "./components/mentee/Report";
 import LandPage from "./components/landpage/LandPage";
 import Resource from "./components/mentee/Resource";
+import Dashboard from "./components/mentee/dashboard";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandPage />} />
+        <Route path="/mentee" element={<Dashboard />} />
         <Route path="/mentee/session" element={<SessionPage />} />
         <Route path="/mentee/connection" element={<MyConnection />} />
         <Route path="/mentee/message" element={<ChatApp />} />
