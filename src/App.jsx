@@ -4,15 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ChatApp from "./components/mentee/Message";
 import Market from "./components/mentee/Market";
 import Report from "./components/mentee/Report";
+import LandPage from "./components/landpage/LandPage";
 function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<LandPage />} />
         <Route path="/mentee/session" element={<SessionPage />} />
         <Route path="/mentee/connection" element={<MyConnection />} />
         <Route path="/mentee/message" element={<ChatApp />} />
         <Route path="/mentee/market" element={<Market />} />
-        <Route path="/mentee/report" element={<Report/>}/>
+        <Route path="/mentee/report" element={<Report />} />
       </Routes>
     </BrowserRouter>
   );

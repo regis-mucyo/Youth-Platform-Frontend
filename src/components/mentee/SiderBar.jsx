@@ -74,20 +74,35 @@ const Sidebar = ({ open, setOpen, activeItem }) => {
   );
 };
 
-const SidebarItem = ({ icon, text, active, badge }) => (
-  <div
-    className={`flex items-center px-6 py-3 cursor-pointer ${
-      active ? "bg-green-500 text-white rounded-r-full" : "text-gray-700"
-    }`}
-  >
-    <span className="w-5 h-5">{icon}</span>
-    <span className="ml-3 text-sm sm:text-base">{text}</span>
-    {badge && (
-      <span className="ml-auto bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
-        {badge}
-      </span>
-    )}
-  </div>
-);
+const SidebarItem = ({ icon, text, badge, active }) => {
+  const routeMap = {
+    Dashboard: "/",
+    Sessions: "/mentee/session",
+    Messages: "/mentee/message",
+    "My Connections": "/mentee/connection",
+    "Market Linkage": "/mentee/market",
+    "Self Reflection": "/mentee/report",
+  };
+
+  const routePath = routeMap[text] || "/";
+
+  return (
+    <Link to={routePath}>
+      <div
+        className={`flex items-center px-6 py-3 cursor-pointer ${
+          active ? "bg-green-500 text-white rounded-r-full" : "text-gray-700"
+        }`}
+      >
+        <span className="w-5 h-5">{icon}</span>
+        <span className="ml-3 text-sm sm:text-base">{text}</span>
+        {badge && (
+          <span className="ml-auto bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
+            {badge}
+          </span>
+        )}
+      </div>
+    </Link>
+  );
+};
 
 export default Sidebar;
