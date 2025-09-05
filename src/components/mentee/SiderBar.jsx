@@ -4,10 +4,12 @@ import {
   MessageCircle,
   Users,
   ShoppingBag,
-  Trophy,
+  UserStar,
   Settings,
   X,
+  FolderClosed,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const navigation = [
   { text: "Dashboard", icon: LayoutDashboard },
@@ -15,7 +17,8 @@ const navigation = [
   { text: "Messages", icon: MessageCircle, badge: "3" },
   { text: "My Connections", icon: Users },
   { text: "Market Linkage", icon: ShoppingBag },
-  { text: "My Contribution", icon: Trophy },
+  { text: "Self Reflection", icon: UserStar },
+  { text: "Resources", icon: FolderClosed },
 ];
 
 const Sidebar = ({ open, setOpen, activeItem }) => {
@@ -37,13 +40,11 @@ const Sidebar = ({ open, setOpen, activeItem }) => {
           </button>
         </div>
 
-  
         <div className="px-6 py-4">
           <h1 className="text-green-600 font-bold text-xl">ElevateLink</h1>
           <p className="text-sm text-gray-500">Mentorship Platform</p>
         </div>
 
-       
         <nav className="mt-6 space-y-2">
           {navigation.map(({ text, icon: Icon, badge }) => (
             <SidebarItem
@@ -56,7 +57,6 @@ const Sidebar = ({ open, setOpen, activeItem }) => {
           ))}
         </nav>
 
-      
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t flex items-center space-x-3">
           <img
             src="https://randomuser.me/api/portraits/men/32.jpg"
