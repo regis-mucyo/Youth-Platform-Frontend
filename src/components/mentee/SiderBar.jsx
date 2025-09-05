@@ -82,6 +82,7 @@ const SidebarItem = ({ icon, text, badge, active }) => {
     "My Connections": "/mentee/connection",
     "Market Linkage": "/mentee/market",
     "Self Reflection": "/mentee/report",
+    "Resources": "/mentee/resource"
   };
 
   const routePath = routeMap[text] || "/";
