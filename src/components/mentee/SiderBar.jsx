@@ -76,7 +76,7 @@ const Sidebar = ({ open, setOpen, activeItem }) => {
 
 const SidebarItem = ({ icon, text, badge, active }) => {
   const routeMap = {
-    Dashboard: "/mentee",
+    Dashboard: "/welcome",
     Sessions: "/mentee/session",
     Messages: "/mentee/message",
     "My Connections": "/mentee/connection",

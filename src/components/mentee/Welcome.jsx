@@ -175,7 +175,7 @@ const ProgressBar = ({ label, value, percent, icon }) => (
 
 const Badge = ({ label, color }) => {
   const bg = {
-    blue: "bg-blue-100 text-blue-700",
+    be: "bg-blue-100 text-blue-700",
     blue: "bg-blue-100 text-blue-700",
     gray: "bg-gray-200 text-gray-600",
   }[color];
