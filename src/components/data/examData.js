@@ -1,4 +1,7 @@
 // Central exam data and helpers used by exam components
+import { businessCareerPath } from "./businessExam.js";
+import { productManagerCareerPath } from "./productManagerExam.js";
+import { digitalMarketingCareerPath } from "./digitalMarketingExam.js";
 
 export const careerPaths = {
   "software-developer": {
@@ -496,6 +499,9 @@ export const careerPaths = {
       },
     },
   },
+  "business": businessCareerPath,
+  "product-manager": productManagerCareerPath,
+  "digital-marketer": digitalMarketingCareerPath,
 };
 
 export const getExamByPath = (careerPath, examType, experienceLevel = "Intermediate") => {
@@ -525,11 +531,12 @@ export const getFilteredCareerPaths = (userProfile) => {
   const fieldMapping = {
     "Software Development": ["software-developer"],
     "Data Science": ["data-scientist"],
-    "Product Management": ["software-developer"], // Map to software-developer for now
-    "Digital Marketing": ["software-developer"], // Map to software-developer for now
+    "Product Management": ["product-manager"],
+    "Digital Marketing": ["digital-marketer"],
     "UI/UX Design": ["software-developer"], // Map to software-developer for now
     Cybersecurity: ["software-developer"], // Map to software-developer for now
-    "Business Analysis": ["data-scientist"], // Map to data-scientist for now
+    "Business": ["business"],
+    "Business Analysis": ["business"],
     "DevOps Engineering": ["software-developer"], // Map to software-developer for now
   };
 

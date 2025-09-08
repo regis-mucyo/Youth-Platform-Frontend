@@ -24,7 +24,9 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
     const fieldOptions = [
         "Software Development",
         "Data Science",
-        "Product Management",
+        "Business",
+        "Business Analysis",
+        "Product Management", 
         "Digital Marketing",
         "UI/UX Design",
         "Cybersecurity",
@@ -82,6 +84,14 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
                 setCurrentStep(currentStep + 1)
             } else {
                 onRegistrationComplete(formData)
+                // Persist minimal user profile used by assessment filtering
+                const profile = {
+                    fullName: formData.fullName,
+                    bio: formData.bio,
+                    fieldOfWork: formData.fieldOfWork,
+                    experienceLevel: formData.experienceLevel,
+                }
+                try { localStorage.setItem('userProfile', JSON.stringify(profile)) } catch {}
                 navigate('/career-selection');
             }
         }
