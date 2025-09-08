@@ -80,7 +80,7 @@ const Sessions = () => {
                 <span
                   className={`text-white text-xs px-3 py-1 rounded-full ${
                     session.status === "upcoming"
-                      ? "bg-green-500"
+                      ? "bg-blue-500"
                       : session.status === "pending"
                       ? "bg-yellow-500"
                       : "bg-gray-400"
@@ -94,7 +94,7 @@ const Sessions = () => {
                 <button
                   className={`text-white text-xs px-3 py-1 rounded-full ${
                     session.status === "upcoming"
-                      ? "bg-green-500"
+                      ? "bg-blue-500"
                       : session.status === "pending"
                       ? "bg-yellow-500"
                       : "bg-gray-400"

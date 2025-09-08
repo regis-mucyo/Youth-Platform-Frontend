@@ -78,7 +78,7 @@ const Dashboard = () => {
           {/* Progress Overview */}
           <div className="bg-white shadow rounded-lg p-6 space-y-6">
             <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-              <BarChart3 className="text-green-500" />
+              <BarChart3 className="text-blue-500" />
               Progress Overview
             </h2>
             <ProgressBar
@@ -104,14 +104,14 @@ const Dashboard = () => {
           {/* Calendar Preview */}
           <div className="bg-white shadow rounded-lg p-6">
             <h2 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-              <Calendar className="text-green-500" />
+              <Calendar className="text-blue-500" />
               Upcoming Sessions
             </h2>
             <ul className="mt-2 space-y-2 text-sm text-gray-700">
               <li>🗓️ Sep 6 – React Interview Prep with Prof. Jean Bosco</li>
               <li>🗓️ Sep 9 – Portfolio Review with Dr. Sarah Uwase</li>
             </ul>
-            <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+            <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition">
               View Upcoming sessions
             </button>
           </div>
@@ -122,7 +122,7 @@ const Dashboard = () => {
               Your Achievements
             </h2>
             <div className="flex flex-wrap gap-3">
-              <Badge label="✅ First Session Completed" color="green" />
+              <Badge label="✅ First Session Completed" color="blue" />
               <Badge label="🧠 10 Hours Milestone" color="blue" />
               <Badge label="🎯 Goal Achievement (Pending)" color="gray" />
             </div>
@@ -136,7 +136,7 @@ const Dashboard = () => {
 // Reusable Components
 const StatCard = ({ icon, label, value }) => (
   <div className="bg-white shadow rounded-lg p-4 flex items-center space-x-3">
-    <div className="text-green-500">{icon}</div>
+    <div className="text-blue-500">{icon}</div>
     <div>
       <p className="text-sm text-gray-500">{label}</p>
       <p className="text-xl font-semibold text-gray-800">{value}</p>
@@ -146,10 +146,10 @@ const StatCard = ({ icon, label, value }) => (
 
 const Widget = ({ icon, title, description, cta }) => (
   <div className="bg-white shadow rounded-lg p-4">
-    <div className="flex items-center gap-2 mb-2 text-green-500">{icon}</div>
+    <div className="flex items-center gap-2 mb-2 text-blue-500">{icon}</div>
     <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
     <p className="text-sm text-gray-600 mt-1">{description}</p>
-    <button className="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition text-sm">
+    <button className="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition text-sm">
       {cta}
     </button>
   </div>
@@ -166,7 +166,7 @@ const ProgressBar = ({ label, value, percent, icon }) => (
     </div>
     <div className="w-full bg-gray-200 rounded-full h-2">
       <div
-        className="bg-green-500 h-2 rounded-full"
+        className="bg-blue-500 h-2 rounded-full"
         style={{ width: percent }}
       ></div>
     </div>
@@ -175,7 +175,7 @@ const ProgressBar = ({ label, value, percent, icon }) => (
 
 const Badge = ({ label, color }) => {
   const bg = {
-    green: "bg-green-100 text-green-700",
+    blue: "bg-blue-100 text-blue-700",
     blue: "bg-blue-100 text-blue-700",
     gray: "bg-gray-200 text-gray-600",
   }[color];
