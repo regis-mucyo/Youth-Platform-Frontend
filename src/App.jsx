@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LandPage from "./components/landpage/LandPage";
-import Dashboard from "./components/mentor/Dashboard";
+import MentorDashboard from "./components/mentor/MentorDashboard";
 
 function App() {
   // return (
@@ -12,7 +12,7 @@ function App() {
   //     </Routes>
   //   </Router>
   // );
-  return <Dashboard />;
+  return <MentorDashboard />;
 }
 
 export default App;
