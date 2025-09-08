@@ -43,23 +43,35 @@ const LoginForm = ({ onLoginComplete, onSwitchToRegister }) => {
 
         // Simulate API call
         setTimeout(() => {
-            // Mock user data - in real app, this would come from API
-            const mockUserProfile = {
-                fullName: "John Doe",
-                email: formData.email,
-                phone: "+1234567890",
-                location: "New York, NY",
-                gender: "Male",
-                bio: "Experienced software developer passionate about creating innovative solutions.",
-                fieldOfWork: "Software Development",
-                experienceLevel: "Senior",
+            // Use existing stored profile if available; otherwise create a minimal default
+            let profile;
+            try {
+                const stored = localStorage.getItem('userProfile');
+                profile = stored ? JSON.parse(stored) : {
+                    fullName: "John Doe",
+                    bio: "",
+                    fieldOfWork: "",
+                    experienceLevel: "Intermediate",
+                };
+            } catch {
+                profile = {
+                    fullName: "John Doe",
+                    bio: "",
+                    fieldOfWork: "",
+                    experienceLevel: "Intermediate",
+                };
             }
+            // Update login-specific fields
+            profile = {
+                ...profile,
+                email: formData.email,
+            };
 
-            // Store user profile for exam system
-            localStorage.setItem('userProfile', JSON.stringify(mockUserProfile));
+            // Persist updated profile for exam filtering
+            localStorage.setItem('userProfile', JSON.stringify(profile));
 
             setIsLoading(false)
-            onLoginComplete(mockUserProfile)
+            onLoginComplete(profile)
         }, 1500)
     }
 
