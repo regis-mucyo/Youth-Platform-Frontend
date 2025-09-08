@@ -86,7 +86,7 @@ const Market = () => {
                     onClick={() => setActiveTab(name)}
                     className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition ${
                       activeTab === name
-                        ? "bg-green-500 text-white"
+                        ? "bg-blue-500 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
@@ -111,8 +111,8 @@ const Market = () => {
                   </p>
                   <div className="mt-4 flex items-center justify-between text-sm text-gray-600">
                     <div className="flex items-center gap-1">
-                      <DollarSign size={16} className="text-green-600" />
-                      <span className="font-semibold text-green-600">
+                      <DollarSign size={16} className="text-blue-600" />
+                      <span className="font-semibold text-blue-600">
                         {card.salary}
                       </span>
                     </div>
@@ -123,7 +123,7 @@ const Market = () => {
                   </div>
                 </div>
                 <div className="px-6 py-4 bg-gray-50">
-                  <button className="w-full flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded transition duration-200">
+                  <button className="w-full flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition duration-200">
                     {card.button}
                     <ArrowRightCircle size={18} />
                   </button>
