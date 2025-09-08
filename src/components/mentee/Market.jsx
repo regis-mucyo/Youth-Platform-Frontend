@@ -53,6 +53,7 @@ const Market = () => {
     Webinars: {
       title: "Design Systems in Practice",
       company: "UXFlow Collective",
+
       level: "Open",
       description:
         "Live webinar on building scalable design systems with Figma and Tailwind. Includes Q&A and resource pack.",
@@ -74,7 +75,9 @@ const Market = () => {
           <Header
             setSidebarOpen={setSidebarOpen}
             dashboard={"Market Linkage"}
-            description={"Discover new opponutinities for the jobs,internships, bootcamps and webinars"}
+            description={
+              "Discover new opponutinities for the jobs,internships, bootcamps and webinars"
+            }
           />
           <main className="p-4 sm:p-6 overflow-y-auto">
             <div className="max-w-2xl mx-auto p-4">

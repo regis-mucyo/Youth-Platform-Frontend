@@ -4,22 +4,22 @@ import { User, Globe, Briefcase, Users } from 'lucide-react';
 const WhyJoinUs = () => {
   const benefits = [
     {
-      icon: <User className="w-8 h-8 text-green-600" />,
+      icon: <User className="w-8 h-8 text-blue-600" />,
       title: "Personalized Guidance",
       description: "Get one-on-one mentorship tailored to your unique goals and challenges"
     },
     {
-      icon: <Globe className="w-8 h-8 text-green-600" />,
+      icon: <Globe className="w-8 h-8 text-blue-600" />,
       title: "Global Insights",
       description: "Access international perspectives from Rwanda's diaspora professionals"
     },
     {
-      icon: <Briefcase className="w-8 h-8 text-green-600" />,
+      icon: <Briefcase className="w-8 h-8 text-blue-600" />,
       title: "Job Readiness Skills",
       description: "Develop practical skills and knowledge for today's competitive job market"
     },
     {
-      icon: <Users className="w-8 h-8 text-green-600" />,
+      icon: <Users className="w-8 h-8 text-blue-600" />,
       title: "Stronger Network",
       description: "Build meaningful connections that last throughout your career"
     }
@@ -43,7 +43,7 @@ const WhyJoinUs = () => {
           {benefits.map((benefit, index) => (
             <div
               key={index}
-              className="bg-gray-50 rounded-xl p-8 text-center hover:bg-green-50 hover:shadow-lg transition-all duration-300 group"
+              className="bg-gray-50 rounded-xl p-8 text-center hover:bg-blue-50 hover:shadow-lg transition-all duration-300 group"
             >
               {/* Icon Container */}
               <div className="bg-white rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-6 shadow-md group-hover:shadow-lg transition-shadow duration-300">
@@ -65,7 +65,7 @@ const WhyJoinUs = () => {
 
         {/* Optional CTA */}
         <div className="text-center mt-12">
-          <button className="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-200">
+          <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200">
             Learn More About Our Community
           </button>
         </div>

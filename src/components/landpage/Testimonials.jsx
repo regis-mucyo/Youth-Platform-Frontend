@@ -10,7 +10,7 @@ const Testimonials = () => {
       role: "Software Developer",
       type: "Mentee",
       avatar: "SM",
-      bgColor: "bg-green-500",
+      bgColor: "bg-blue-500",
     },
     {
       quote:
@@ -51,10 +51,10 @@ const Testimonials = () => {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-gray-50 rounded-xl p-8 hover:bg-green-50 hover:shadow-lg transition-all duration-300 relative"
+              className="bg-gray-50 rounded-xl p-8 hover:bg-blue-50 hover:shadow-lg transition-all duration-300 relative"
             >
               {/* Quote Icon */}
-              <div className="absolute -top-4 -left-4 bg-green-600 rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
+              <div className="absolute -top-4 -left-4 bg-blue-600 rounded-full w-12 h-12 flex items-center justify-center shadow-lg">
                 <Quote className="w-6 h-6 text-white" />
               </div>
 
@@ -85,7 +85,7 @@ const Testimonials = () => {
                       className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
                         testimonial.type === "Mentor"
                           ? "bg-blue-100 text-blue-800"
-                          : "bg-green-100 text-green-800"
+                          : "bg-blue-100 text-blue-800"
                       }`}
                     >
                       {testimonial.type}
@@ -99,23 +99,23 @@ const Testimonials = () => {
 
         {/* Community Stats - Updated */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-          <div className="bg-green-50 rounded-lg p-6">
-            <div className="text-3xl font-bold text-green-600 mb-2">500+</div>
+          <div className="bg-blue-50 rounded-lg p-6">
+            <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
             <div className="text-gray-600">Active Mentees</div>
           </div>
-          <div className="bg-green-50 rounded-lg p-6">
-            <div className="text-3xl font-bold text-green-600 mb-2">180+</div>
+          <div className="bg-blue-50 rounded-lg p-6">
+            <div className="text-3xl font-bold text-blue-600 mb-2">180+</div>
             <div className="text-gray-600">Diaspora Mentors Ready</div>
           </div>
-          <div className="bg-green-50 rounded-lg p-6">
-            <div className="text-3xl font-bold text-green-600 mb-2">310</div>
+          <div className="bg-blue-50 rounded-lg p-6">
+            <div className="text-3xl font-bold text-blue-600 mb-2">310</div>
             <div className="text-gray-600">Mentorships Started</div>
           </div>
         </div>
 
         {/* Optional CTA */}
         <div className="text-center mt-12">
-          <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-200">
+          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200">
             Join Our Community
           </button>
         </div>
