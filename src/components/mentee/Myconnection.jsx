@@ -113,18 +113,18 @@ const Myconnection = () => {
 
                   <div className="space-y-2 text-sm text-gray-700">
                     <div className="flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-green-500" />
+                      <Building2 className="w-4 h-4 text-blue-500" />
                       <span>{person.company}</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <Layers className="w-4 h-4 text-green-500" />
+                      <Layers className="w-4 h-4 text-blue-500" />
                       <span>{person.expertise}</span>
                     </div>
 
                     {activeTab === "Mentor" && (
                       <>
                         <div className="flex items-center gap-2">
-                          <Briefcase className="w-4 h-4 text-green-500" />
+                          <Briefcase className="w-4 h-4 text-blue-500" />
                           <span>{person.experience} yrs experience</span>
                         </div>
                         <div className="flex items-center gap-2">
@@ -141,7 +141,7 @@ const Myconnection = () => {
                     {person.description}
                   </p>
 
-                  <button className="mt-4 w-full bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded">
+                  <button className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
                     {activeTab === "Mentor"
                       ? "Book Session"
                       : "Message"}
