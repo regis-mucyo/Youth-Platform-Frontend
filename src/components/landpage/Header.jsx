@@ -24,7 +24,7 @@ const Header = ({ currentRole = "mentee" }) => {
           <div className="flex-shrink-0 font-bold text-2xl md:text-3xl">
             <Link
               to={currentRole === "mentor" ? "/mentor" : "/mentee"}
-              className="text-green-600 no-underline hover:text-green-700 transition-colors duration-200"
+              className="text-blue-600 no-underline hover:text-blue-700 transition-colors duration-200"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
               elevateLink
@@ -37,7 +37,7 @@ const Header = ({ currentRole = "mentee" }) => {
               <a
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
+                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors duration-200"
               >
                 {item.name}
               </a>
@@ -50,7 +50,7 @@ const Header = ({ currentRole = "mentee" }) => {
               to="/mentee"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                 currentRole === "mentee"
-                  ? "bg-green-600 text-white"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -60,7 +60,7 @@ const Header = ({ currentRole = "mentee" }) => {
               to="/mentor"
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                 currentRole === "mentor"
-                  ? "bg-green-600 text-white"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -68,13 +68,13 @@ const Header = ({ currentRole = "mentee" }) => {
             </Link>
             <Link
               to="/login"
-              className="text-green-600 px-4 py-2 rounded-md text-sm font-medium hover:text-green-700 transition-colors duration-200"
+              className="text-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:text-blue-700 transition-colors duration-200"
             >
               Log In
             </Link>
             <Link
               to={`/register?role=${currentRole}`}
-              className="bg-green-500 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200"
+              className="bg-blue-500 text-white px-6 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors duration-200"
             >
               Sign Up
             </Link>
@@ -84,7 +84,7 @@ const Header = ({ currentRole = "mentee" }) => {
           <div className="md:hidden">
             <button
               onClick={toggleMenu}
-              className="text-gray-700 hover:text-green-600 focus:outline-none focus:text-green-600 p-2"
+              className="text-gray-700 hover:text-blue-600 focus:outline-none focus:text-blue-600 p-2"
             >
               {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -99,7 +99,7 @@ const Header = ({ currentRole = "mentee" }) => {
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-green-600 block px-3 py-2 text-base font-medium transition-colors duration-200"
+                  className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium transition-colors duration-200"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -113,7 +113,7 @@ const Header = ({ currentRole = "mentee" }) => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block text-center w-full px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                     currentRole === "mentee"
-                      ? "bg-green-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -124,7 +124,7 @@ const Header = ({ currentRole = "mentee" }) => {
                   onClick={() => setIsMenuOpen(false)}
                   className={`block text-center w-full px-4 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
                     currentRole === "mentor"
-                      ? "bg-green-600 text-white"
+                      ? "bg-blue-600 text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -133,14 +133,14 @@ const Header = ({ currentRole = "mentee" }) => {
                 <Link
                   to="/login"
                   onClick={() => setIsMenuOpen(false)}
-                  className="block w-full text-center text-green-600 px-4 py-2 rounded-md text-sm font-medium hover:text-green-700 transition-colors duration-200"
+                  className="block w-full text-center text-blue-600 px-4 py-2 rounded-md text-sm font-medium hover:text-blue-700 transition-colors duration-200"
                 >
                   Log In
                 </Link>
                 <Link
                   to={`/register?role=${currentRole}`}
                   onClick={() => setIsMenuOpen(false)}
-                  className="block w-full bg-green-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200"
+                  className="block w-full bg-blue-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-blue-600 transition-colors duration-200"
                 >
                   Sign Up
                 </Link>

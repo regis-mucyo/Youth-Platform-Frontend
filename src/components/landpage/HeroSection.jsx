@@ -11,12 +11,12 @@ const HeroSection = ({ role = "mentee" }) => {
           {role === "mentee" ? (
             <>
               Bridging Rwanda’s Youth with the{" "}
-              <span className="text-green-600">Diaspora</span>
+              <span className="text-blue-600">Diaspora</span>
             </>
           ) : (
             <>
               Share Your Expertise with{" "}
-              <span className="text-green-600">Rwanda’s Future</span>
+              <span className="text-blue-600">Rwanda’s Future</span>
             </>
           )}
         </h1>
@@ -43,7 +43,7 @@ function HeroCTA({ role }) {
     return (
       <button
         onClick={() => navigate('/register')}
-        className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+        className="bg-blue-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
       >
         Start Your Journey
       </button>
@@ -52,7 +52,7 @@ function HeroCTA({ role }) {
   return (
     <button
       onClick={() => navigate('/mentor')}
-      className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
+      className="bg-blue-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl"
     >
       Become a Mentor
     </button>

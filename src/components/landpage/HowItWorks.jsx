@@ -45,12 +45,12 @@ const HowItWorks = () => {
               {/* Step Card */}
               <div className="bg-white rounded-xl p-8 text-center shadow-md hover:shadow-xl transition-shadow duration-300 relative z-10">
                 {/* Step Number */}
-                <div className="absolute -top-4 -left-4 bg-green-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
+                <div className="absolute -top-4 -left-4 bg-blue-600 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">
                   {step.stepNumber}
                 </div>
 
                 {/* Icon Container */}
-                <div className="bg-green-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <div className="bg-blue-600 rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6 shadow-lg">
                   {step.icon}
                 </div>
 
@@ -68,8 +68,8 @@ const HowItWorks = () => {
               {/* Connection Arrow (Desktop only) */}
               {index < steps.length - 1 && (
                 <div className="hidden md:block absolute top-1/2 -right-6 transform -translate-y-1/2 z-20">
-                  <div className="w-12 h-0.5 bg-green-300">
-                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-4 border-l-green-300 border-t-2 border-b-2 border-t-transparent border-b-transparent"></div>
+                  <div className="w-12 h-0.5 bg-blue-300">
+                    <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-0 h-0 border-l-4 border-l-blue-300 border-t-2 border-b-2 border-t-transparent border-b-transparent"></div>
                   </div>
                 </div>
               )}
@@ -77,7 +77,7 @@ const HowItWorks = () => {
               {/* Connection Line (Mobile only) */}
               {index < steps.length - 1 && (
                 <div className="md:hidden flex justify-center py-4">
-                  <div className="w-0.5 h-8 bg-green-300"></div>
+                  <div className="w-0.5 h-8 bg-blue-300"></div>
                 </div>
               )}
             </div>
@@ -86,7 +86,7 @@ const HowItWorks = () => {
 
         {/* Optional CTA */}
         <div className="text-center mt-16">
-          <button className="bg-green-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-green-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
+          <button className="bg-blue-600 text-white px-8 py-4 text-lg font-semibold rounded-lg hover:bg-blue-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl">
             Get Started Now
           </button>
         </div>
