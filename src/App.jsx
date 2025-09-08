@@ -18,6 +18,8 @@ import RegistrationForm from "./components/Auth/RegistrationForm.jsx";
 import LoginForm from "./components/Auth/LoginForm.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import CareerSelection from "./components/CareerSelection.jsx";
+import MentorDashboard from "./components/mentor/MentorDashboard";
+
 function RegisterRoute() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -94,6 +96,8 @@ export default function App() {
         <Route path="/mentee/market" element={<Market />} />
         <Route path="/mentee/report" element={<Report />} />
         <Route path="/mentee/resource" element={<Resource />} />
+
+        <Route path="/mentor" element={<MentorDashboard/>}/>
       </Routes>
     </Router>
   );
