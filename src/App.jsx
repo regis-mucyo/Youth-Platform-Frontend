@@ -1,3 +1,12 @@
+
+import SessionPage from "./components/mentee/SessionPage";
+import MyConnection from "./components/mentee/MyConnection"; 
+import ChatApp from "./components/mentee/Message";
+import Market from "./components/mentee/Market";
+import Report from "./components/mentee/Report";
+import LandPage from "./components/landpage/LandPage";
+import Resource from "./components/mentee/Resource";
+import Dashboard from "./components/mentee/dashboard";
 import { BrowserRouter as Router, Routes, Route, useNavigate, useSearchParams } from "react-router-dom";
 import LandPage from "./components/landpage/LandPage";
 import ExM from "./components/data/Exam/ExM.jsx";
@@ -5,7 +14,6 @@ import RegistrationForm from "./components/Auth/RegistrationForm.jsx";
 import LoginForm from "./components/Auth/LoginForm.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import CareerSelection from "./components/CareerSelection.jsx";
-
 function RegisterRoute() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -70,7 +78,16 @@ export default function App() {
         <Route path="/career-selection" element={<CareerSelection />} />
         <Route path="/exam" element={<ExM />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/mentee" element={<Dashboard />} />
+        <Route path="/mentee/session" element={<SessionPage />} />
+        <Route path="/mentee/connection" element={<MyConnection />} />
+        <Route path="/mentee/message" element={<ChatApp />} />
+        <Route path="/mentee/market" element={<Market />} />
+        <Route path="/mentee/report" element={<Report />} />
+        <Route path="/mentee/resource" element={<Resource/>}/>
       </Routes>
     </Router>
   );
 }
+
+export default App;
