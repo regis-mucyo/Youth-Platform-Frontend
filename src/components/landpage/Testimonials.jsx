@@ -97,19 +97,19 @@ const Testimonials = () => {
           ))}
         </div>
 
-        {/* Community Stats */}
+        {/* Community Stats - Updated */}
         <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
           <div className="bg-green-50 rounded-lg p-6">
             <div className="text-3xl font-bold text-green-600 mb-2">500+</div>
-            <div className="text-gray-600">Active Mentors</div>
+            <div className="text-gray-600">Active Mentees</div>
           </div>
           <div className="bg-green-50 rounded-lg p-6">
-            <div className="text-3xl font-bold text-green-600 mb-2">1000+</div>
-            <div className="text-gray-600">Success Stories</div>
+            <div className="text-3xl font-bold text-green-600 mb-2">180+</div>
+            <div className="text-gray-600">Diaspora Mentors Ready</div>
           </div>
           <div className="bg-green-50 rounded-lg p-6">
-            <div className="text-3xl font-bold text-green-600 mb-2">50+</div>
-            <div className="text-gray-600">Countries Connected</div>
+            <div className="text-3xl font-bold text-green-600 mb-2">310</div>
+            <div className="text-gray-600">Mentorships Started</div>
           </div>
         </div>
 
