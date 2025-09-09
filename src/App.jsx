@@ -22,8 +22,9 @@ import Dashboard from "./components/Dashboard.jsx";
 import CareerSelection from "./components/CareerSelection.jsx";
 import MentorRegistrationForm from "./components/Auth/MentorRegistrationForm.jsx";
 import MentorVerificationPending from "./components/mentor/MentorVerificationPending.jsx"; // Import new component
-import { useState, useEffect } from "react";
 import Combine from "./components/mentor/Combine.jsx";
+import { useState, useEffect } from "react";
+
 function RegisterRoute({ onRegistrationComplete }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -151,7 +152,6 @@ export default function App() {
           <Route path="/mentee/market" element={<Market />} />
           <Route path="/mentee/report" element={<Report />} />
           <Route path="/mentee/resource" element={<Resource />} />
-          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           <Route
             path="/mentor-pending-verification"
             element={<MentorVerificationPending />}
@@ -166,7 +166,7 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/welcome" element={<Welcome />} />
           <Route path="/mentee/session" element={<SessionPage />} />
-          <Route path="/mentee/connection" element={<MyConnection />} />
+          {/* <Route path="/mentee/connection" element={<MyConnection />} /> */}
           <Route path="/mentee/message" element={<ChatApp />} />
           <Route path="/mentee/market" element={<Market />} />
           <Route path="/mentee/report" element={<Report />} />
