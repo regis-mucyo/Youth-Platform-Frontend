@@ -36,9 +36,9 @@ const ImpactSection = () => {
           </div>
         </div>
 
-        <div className="mt-16 bg-green-50 border border-green-200 rounded-xl p-8 max-w-3xl mx-auto">
+        <div className="mt-16 bg-blue-50 border border-blue-200 rounded-xl p-8 max-w-3xl mx-auto">
           <p className="text-lg text-gray-800 font-medium">
-            <span className="text-green-600 font-bold">ElevateLink</span>{" "}
+            <span className="text-blue-600 font-bold">ElevateLink</span>{" "}
             connects two powerful forces:
             <strong> ambition at home</strong> and{" "}
             <strong>wisdom abroad</strong>. Together, we rise.

@@ -35,7 +35,7 @@ const Footer = () => {
           <div className="lg:col-span-1">
             <div className="text-2xl font-bold mb-4">
               <span
-                className="text-green-400"
+                className="text-blue-400"
                 style={{ fontFamily: "Poppins, sans-serif" }}
               >
                 elevateLink
@@ -50,7 +50,7 @@ const Footer = () => {
                 <a
                   key={social.name}
                   href={social.href}
-                  className="bg-gray-800 p-2 rounded-full hover:bg-green-600 transition-colors duration-200"
+                  className="bg-gray-800 p-2 rounded-full hover:bg-blue-600 transition-colors duration-200"
                   aria-label={social.name}
                 >
                   {social.icon}
@@ -67,7 +67,7 @@ const Footer = () => {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="text-gray-300 hover:text-green-400 transition-colors duration-200 text-sm"
+                    className="text-gray-300 hover:text-blue-400 transition-colors duration-200 text-sm"
                   >
                     {link.name}
                   </a>
@@ -81,15 +81,15 @@ const Footer = () => {
             <h3 className="text-lg font-semibold mb-4">Contact Us</h3>
             <div className="space-y-3">
               <div className="flex items-center text-sm">
-                <Mail className="w-4 h-4 mr-3 text-green-400 flex-shrink-0" />
+                <Mail className="w-4 h-4 mr-3 text-blue-400 flex-shrink-0" />
                 <span className="text-gray-300">info@elevatelink.com</span>
               </div>
               <div className="flex items-center text-sm">
-                <Phone className="w-4 h-4 mr-3 text-green-400 flex-shrink-0" />
+                <Phone className="w-4 h-4 mr-3 text-blue-400 flex-shrink-0" />
                 <span className="text-gray-300">+250 788 123 456</span>
               </div>
               <div className="flex items-start text-sm">
-                <MapPin className="w-4 h-4 mr-3 text-green-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 mr-3 text-blue-400 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-300">
                   KG 15 Ave, Kimisagara
                   <br />
@@ -110,9 +110,9 @@ const Footer = () => {
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:outline-none focus:border-green-400 transition-colors duration-200 text-sm"
+                className="w-full px-4 py-2 bg-gray-800 text-white border border-gray-700 rounded-lg focus:outline-none focus:border-blue-400 transition-colors duration-200 text-sm"
               />
-              <button className="w-full bg-green-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-green-700 transition-colors duration-200">
+              <button className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors duration-200">
                 Subscribe
               </button>
             </div>
@@ -128,19 +128,19 @@ const Footer = () => {
             <div className="flex space-x-6 text-sm">
               <a
                 href="#privacy"
-                className="text-gray-400 hover:text-green-400 transition-colors duration-200"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
               >
                 Privacy Policy
               </a>
               <a
                 href="#terms"
-                className="text-gray-400 hover:text-green-400 transition-colors duration-200"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
               >
                 Terms of Service
               </a>
               <a
                 href="#cookies"
-                className="text-gray-400 hover:text-green-400 transition-colors duration-200"
+                className="text-gray-400 hover:text-blue-400 transition-colors duration-200"
               >
                 Cookie Policy
               </a>

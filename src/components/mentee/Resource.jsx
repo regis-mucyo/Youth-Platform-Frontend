@@ -11,7 +11,7 @@ const Resource = () => {
       author: "Dr. Sarah Uwase",
       date: "Aug 12, 2025",
       level: "Beginner",
-      link: "#",
+      link: "https://matthewdbill.medium.com/tips-for-tech-job-interview-preparation-760c8b44ef22",
     },
     {
       topic: "Mentorship Strategy",
@@ -19,7 +19,7 @@ const Resource = () => {
       author: "Prof. Jean Bosco",
       date: "Jul 28, 2025",
       level: "Intermediate",
-      link: "#",
+      link: "https://www.avadolearning.com/blog/tips-for-building-mentor-relationship-remotely/",
     },
   ];
 
@@ -70,7 +70,7 @@ const Resource = () => {
                     onClick={() => setActiveTab(tab)}
                     className={`px-4 py-2 rounded-full text-sm font-medium transition ${
                       activeTab === tab
-                        ? "bg-green-500 text-white"
+                        ? "bg-blue-500 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                     }`}
                   >
@@ -97,8 +97,10 @@ const Resource = () => {
                       </span>
                       <div className="mt-4">
                         <a
+                          target="_blank"
+                          rel="noopener noreferrer"
                           href={item.link}
-                          className="inline-block bg-green-500 text-white text-sm px-4 py-2 rounded hover:bg-green-600 transition"
+                          className="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition"
                         >
                           Read More
                         </a>
@@ -136,7 +138,7 @@ const Resource = () => {
                             href={item.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-block bg-green-500 text-white text-sm px-4 py-2 rounded hover:bg-green-600 transition"
+                            className="inline-block bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600 transition"
                           >
                             Watch
                           </a>

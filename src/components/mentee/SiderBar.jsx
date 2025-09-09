@@ -8,6 +8,7 @@ import {
   Settings,
   X,
   FolderClosed,
+  NotebookPen,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -16,6 +17,7 @@ const navigation = [
   { text: "Sessions", icon: Calendar },
   { text: "Messages", icon: MessageCircle, badge: "3" },
   { text: "My Connections", icon: Users },
+  { text: "Book Session", icon: NotebookPen },
   { text: "Market Linkage", icon: ShoppingBag },
   { text: "Self Reflection", icon: UserStar },
   { text: "Resources", icon: FolderClosed },
@@ -41,7 +43,7 @@ const Sidebar = ({ open, setOpen, activeItem }) => {
         </div>
 
         <div className="px-6 py-4">
-          <h1 className="text-green-600 font-bold text-xl">ElevateLink</h1>
+          <h1 className="text-blue-600 font-bold text-xl">ElevateLink</h1>
           <p className="text-sm text-gray-500">Mentorship Platform</p>
         </div>
 
@@ -76,28 +78,29 @@ const Sidebar = ({ open, setOpen, activeItem }) => {
 
 const SidebarItem = ({ icon, text, badge, active }) => {
   const routeMap = {
-    Dashboard: "/welcome",
+    Dashboard: "/mentee/welcome",
     Sessions: "/mentee/session",
     Messages: "/mentee/message",
     "My Connections": "/mentee/connection",
+    "Book Session": "/mentee/find",
     "Market Linkage": "/mentee/market",
     "Self Reflection": "/mentee/report",
-    "Resources": "/mentee/resource"
+    Resources: "/mentee/resource",
   };
 
-  const routePath = routeMap[text] || "/";
+  const routePath = routeMap[text] || "/mentee/welcome";
 
   return (
     <Link to={routePath}>
       <div
         className={`flex items-center px-6 py-3 cursor-pointer ${
-          active ? "bg-green-500 text-white rounded-r-full" : "text-gray-700"
+          active ? "bg-blue-500 text-white rounded-r-full" : "text-gray-700"
         }`}
       >
         <span className="w-5 h-5">{icon}</span>
         <span className="ml-3 text-sm sm:text-base">{text}</span>
         {badge && (
-          <span className="ml-auto bg-green-500 text-white text-xs px-2 py-0.5 rounded-full">
+          <span className="ml-auto bg-blue-500 text-white text-xs px-2 py-0.5 rounded-full">
             {badge}
           </span>
         )}

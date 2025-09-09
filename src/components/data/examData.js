@@ -1,4 +1,100 @@
 // Central exam data and helpers used by exam components
+import { businessCareerPath } from "./businessExam.js";
+import { productManagerCareerPath } from "./productManagerExam.js";
+import { digitalMarketingCareerPath } from "./digitalMarketingExam.js";
+
+export const uiUxDesignerCareerPath = {
+  title: "UI/UX Designer",
+  description: "User Interface and User Experience design assessment",
+  experienceLevels: ["Beginner", "Intermediate", "Junior", "Senior"],
+  technical: {
+    title: "Design Principles Assessment",
+    duration: 30,
+    questions: {
+      Beginner: [
+        { id: 1, question: "What is 'User Experience'?", options: ["How a product looks", "How a product feels and functions", "How a product is marketed", "How a product is coded"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+        { id: 2, question: "Which principle deals with arranging elements?", options: ["Contrast", "Alignment", "Repetition", "Proximity"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+      ],
+      Intermediate: [
+        { id: 1, question: "What is a wireframe?", options: ["A high-fidelity design", "A low-fidelity layout sketch", "A coding framework", "A user testing method"], correctAnswer: 1, type: "multiple-choice", difficulty: "Intermediate" },
+      ],
+    },
+  },
+  soft: {
+    title: "Soft Skills Assessment",
+    duration: 20,
+    questions: {
+      Beginner: [
+        { id: 1, question: "How do you handle design feedback?", options: ["Ignore it", "Defend your design", "Listen and iterate constructively", "Only accept positive feedback"], correctAnswer: 2, type: "multiple-choice", difficulty: "Beginner" },
+      ],
+      Intermediate: [
+        { id: 1, question: "How do you collaborate with developers?", options: ["Hand off designs and leave", "Communicate clearly and work together through implementation", "Expect them to read your mind", "Only talk to project managers"], correctAnswer: 1, type: "multiple-choice", difficulty: "Intermediate" },
+      ],
+    },
+  },
+};
+
+export const cybersecuritySpecialistCareerPath = {
+  title: "Cybersecurity Specialist",
+  description: "Cybersecurity knowledge and threat analysis assessment",
+  experienceLevels: ["Beginner", "Intermediate", "Junior", "Senior"],
+  technical: {
+    title: "Technical Assessment",
+    duration: 30,
+    questions: {
+      Beginner: [
+        { id: 1, question: "What is a firewall?", options: ["A physical wall", "A network security system", "A type of virus", "A software bug"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+        { id: 2, question: "What is phishing?", options: ["A fishing technique", "An attempt to trick users into revealing sensitive information", "A type of malware", "A network protocol"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+      ],
+      Intermediate: [
+        { id: 1, question: "What is the CIA triad?", options: ["Confidentiality, Integrity, Availability", "Code, Implement, Analyze", "Central, Isolated, Accessible", "Control, Identify, Authenticate"], correctAnswer: 0, type: "multiple-choice", difficulty: "Intermediate" },
+      ],
+    },
+  },
+  soft: {
+    title: "Soft Skills Assessment",
+    duration: 20,
+    questions: {
+      Beginner: [
+        { id: 1, question: "How do you communicate security risks?", options: ["Exaggerate", "Minimize", "Clearly and concisely, tailoring to the audience", "Only to technical people"], correctAnswer: 2, type: "multiple-choice", difficulty: "Beginner" },
+      ],
+      Intermediate: [
+        { id: 1, question: "How do you stay updated on threats?", options: ["Wait for news", "Continuously research and attend trainings", "Only learn new tools", "Rely on colleagues"], correctAnswer: 1, type: "multiple-choice", difficulty: "Intermediate" },
+      ],
+    },
+  },
+};
+
+export const devopsEngineerCareerPath = {
+  title: "DevOps Engineer",
+  description: "DevOps practices, tools, and automation assessment",
+  experienceLevels: ["Beginner", "Intermediate", "Junior", "Senior"],
+  technical: {
+    title: "Technical Assessment",
+    duration: 30,
+    questions: {
+      Beginner: [
+        { id: 1, question: "What is Continuous Integration (CI)?", options: ["Manual testing", "Regularly merging code changes into a central repository", "A deployment strategy", "A database design principle"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+        { id: 2, question: "Which tool is used for version control?", options: ["Jira", "Git", "Slack", "Jenkins"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+      ],
+      Intermediate: [
+        { id: 1, question: "What is Infrastructure as Code (IaC)?", options: ["Manually configuring servers", "Managing and provisioning infrastructure through code", "A programming language", "A cloud provider"], correctAnswer: 1, type: "multiple-choice", difficulty: "Intermediate" },
+      ],
+    },
+  },
+  soft: {
+    title: "Soft Skills Assessment",
+    duration: 20,
+    questions: {
+      Beginner: [
+        { id: 1, question: "How do you foster collaboration between Dev and Ops?", options: ["Keep them separate", "Encourage shared responsibility and communication", "Blame one another", "Automate everything without human interaction"], correctAnswer: 1, type: "multiple-choice", difficulty: "Beginner" },
+      ],
+      Intermediate: [
+        { id: 1, question: "How do you handle production incidents?", options: ["Panic", "Follow established incident response procedures and communicate effectively", "Blame the last deploy", "Ignore alerts"], correctAnswer: 1, type: "multiple-choice", difficulty: "Intermediate" },
+      ],
+    },
+  },
+};
 
 export const careerPaths = {
   "software-developer": {
@@ -496,6 +592,12 @@ export const careerPaths = {
       },
     },
   },
+  "business": businessCareerPath,
+  "product-manager": productManagerCareerPath,
+  "digital-marketer": digitalMarketingCareerPath,
+  "ui-ux-designer": uiUxDesignerCareerPath,
+  "cybersecurity-specialist": cybersecuritySpecialistCareerPath,
+  "devops-engineer": devopsEngineerCareerPath,
 };
 
 export const getExamByPath = (careerPath, examType, experienceLevel = "Intermediate") => {
@@ -525,11 +627,12 @@ export const getFilteredCareerPaths = (userProfile) => {
   const fieldMapping = {
     "Software Development": ["software-developer"],
     "Data Science": ["data-scientist"],
-    "Product Management": ["software-developer"], // Map to software-developer for now
-    "Digital Marketing": ["software-developer"], // Map to software-developer for now
+    "Product Management": ["product-manager"],
+    "Digital Marketing": ["digital-marketer"],
     "UI/UX Design": ["software-developer"], // Map to software-developer for now
     Cybersecurity: ["software-developer"], // Map to software-developer for now
-    "Business Analysis": ["data-scientist"], // Map to data-scientist for now
+    "Business": ["business"],
+    "Business Analysis": ["business"],
     "DevOps Engineering": ["software-developer"], // Map to software-developer for now
   };
 
