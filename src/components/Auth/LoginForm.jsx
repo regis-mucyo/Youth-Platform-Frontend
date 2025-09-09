@@ -43,31 +43,41 @@ const LoginForm = ({ onLoginComplete, onSwitchToRegister }) => {
 
         // Simulate API call
         setTimeout(() => {
-            // Use existing stored profile if available; otherwise create a minimal default
-            let profile;
+            let profile = null;
             try {
-                const stored = localStorage.getItem('userProfile');
-                profile = stored ? JSON.parse(stored) : {
-                    fullName: "John Doe",
-                    bio: "",
-                    fieldOfWork: "",
-                    experienceLevel: "Intermediate",
-                };
-            } catch {
+                const storedProfileString = localStorage.getItem('userProfile');
+                if (storedProfileString) {
+                    const storedProfile = JSON.parse(storedProfileString);
+                    // Check if the stored profile matches the logged-in email
+                    if (storedProfile.email === formData.email) {
+                        profile = storedProfile;
+                    }
+                }
+            } catch (error) {
+                console.error("Error parsing user profile from localStorage", error);
+            }
+
+            // If no matching profile found, or if profile is null, create a default mentee profile
+            if (!profile) {
                 profile = {
-                    fullName: "John Doe",
+                    fullName: "Guest User", // A generic name for new/unrecognized logins
+                    email: formData.email,
                     bio: "",
                     fieldOfWork: "",
                     experienceLevel: "Intermediate",
+                    role: "mentee", // Default to mentee if no matching profile found
+                    hasCompletedExams: false,
+                    verificationStatus: "", // No verification status for default mentee
                 };
             }
-            // Update login-specific fields
+
+            // Update login-specific fields (email should always be current)
             profile = {
                 ...profile,
                 email: formData.email,
             };
 
-            // Persist updated profile for exam filtering
+            // Persist updated profile
             localStorage.setItem('userProfile', JSON.stringify(profile));
 
             setIsLoading(false)

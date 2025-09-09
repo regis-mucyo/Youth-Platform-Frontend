@@ -10,13 +10,20 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
         fullName: "",
         email: "",
         phone: "",
-        location: "",
+        country: "", // New field for Country
+        city: "",    // New field for City
         gender: "",
         bio: "",
         fieldOfWork: "",
         experienceLevel: "",
         password: "",
         confirmPassword: "",
+        // Mentor specific fields
+        title: "",
+        primaryExperience: "",
+        yearsOfExperience: "",
+        skills: "",
+        linkedinUrl: "",
     })
 
     const [errors, setErrors] = useState({})
@@ -26,7 +33,7 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
         "Data Science",
         "Business",
         "Business Analysis",
-        "Product Management", 
+        "Product Management",
         "Digital Marketing",
         "UI/UX Design",
         "Cybersecurity",
@@ -36,6 +43,10 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
     const experienceLevels = ["Beginner", "Intermediate", "Junior", "Senior"]
 
     const genderOptions = ["Male", "Female", "Other", "Prefer not to say"]
+
+    const countries = [
+        "United States", "Canada", "United Kingdom", "Australia", "Germany", "France", "India", "Brazil", "South Africa", "Rwanda", "Other"
+    ];
 
     const handleInputChange = (field, value) => {
         setFormData((prev) => ({ ...prev, [field]: value }))
@@ -65,13 +76,23 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
             } else if (formData.password !== formData.confirmPassword) {
                 newErrors.confirmPassword = "Passwords do not match"
             }
+            if (role === "mentor") {
+                if (!formData.title.trim()) newErrors.title = "Title is required"
+                if (!formData.primaryExperience.trim()) newErrors.primaryExperience = "Primary experience is required"
+                if (!formData.yearsOfExperience.trim()) newErrors.yearsOfExperience = "Years of experience is required"
+                if (!formData.skills.trim()) newErrors.skills = "Skills are required"
+                if (!formData.linkedinUrl.trim()) newErrors.linkedinUrl = "LinkedIn URL is required"
+            }
         } else if (step === 2) {
-            if (!formData.location.trim()) newErrors.location = "Location is required"
+            if (!formData.country.trim()) newErrors.country = "Country is required"
+            if (!formData.city.trim()) newErrors.city = "City is required"
             if (!formData.gender) newErrors.gender = "Gender is required"
             if (!formData.bio.trim()) newErrors.bio = "Bio is required"
         } else if (step === 3) {
-            if (!formData.fieldOfWork) newErrors.fieldOfWork = "Field of work is required"
-            if (!formData.experienceLevel) newErrors.experienceLevel = "Experience level is required"
+            if (role === "mentee") {
+                if (!formData.fieldOfWork) newErrors.fieldOfWork = "Field of work is required"
+                if (!formData.experienceLevel) newErrors.experienceLevel = "Experience level is required"
+            }
         }
 
         setErrors(newErrors)
@@ -88,10 +109,14 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
                 const profile = {
                     fullName: formData.fullName,
                     bio: formData.bio,
+                    country: formData.country,
+                    city: formData.city,
                     fieldOfWork: formData.fieldOfWork,
                     experienceLevel: formData.experienceLevel,
+                    role: role,  // store role from prop
+                    hasCompletedExams: false, // Initialize hasCompletedExams for mentees
                 }
-                try { localStorage.setItem('userProfile', JSON.stringify(profile)) } catch {}
+                try { localStorage.setItem('userProfile', JSON.stringify(profile)) } catch { }
                 navigate('/career-selection');
             }
         }
@@ -208,16 +233,33 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
                     {currentStep === 2 && (
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-gray-700 text-sm font-medium mb-2">Location</label>
+                                <label className="block text-gray-700 text-sm font-medium mb-2">Country</label>
+                                <select
+                                    value={formData.country}
+                                    onChange={(e) => handleInputChange("country", e.target.value)}
+                                    className={`w-full px-4 py-3 rounded-lg border ${errors.country ? "border-red-300" : "border-gray-200"
+                                        } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
+                                >
+                                    <option value="">Select your country</option>
+                                    {countries.map((country) => (
+                                        <option key={country} value={country}>
+                                            {country}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.country && <p className="text-red-500 text-sm mt-1">{errors.country}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 text-sm font-medium mb-2">City</label>
                                 <input
                                     type="text"
-                                    placeholder="Enter your location"
-                                    value={formData.location}
-                                    onChange={(e) => handleInputChange("location", e.target.value)}
-                                    className={`w-full px-4 py-3 rounded-lg border ${errors.location ? "border-red-300" : "border-gray-200"
+                                    placeholder="Enter your city"
+                                    value={formData.city}
+                                    onChange={(e) => handleInputChange("city", e.target.value)}
+                                    className={`w-full px-4 py-3 rounded-lg border ${errors.city ? "border-red-300" : "border-gray-200"
                                         } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                                 />
-                                {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location}</p>}
+                                {errors.city && <p className="text-red-500 text-sm mt-1">{errors.city}</p>}
                             </div>
 
                             <div>
