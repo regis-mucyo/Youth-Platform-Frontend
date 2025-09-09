@@ -6,6 +6,8 @@ import Report from "./components/mentee/Report";
 import LandPage from "./components/landpage/LandPage";
 import Resource from "./components/mentee/Resource";
 import Welcome from "./components/mentee/Welcome.jsx";
+
+import FindBook from "./components/mentee/FindBook";
 import {
   BrowserRouter as Router,
   Routes,
@@ -19,85 +21,144 @@ import LoginForm from "./components/Auth/LoginForm.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import CareerSelection from "./components/CareerSelection.jsx";
 import MentorDashboard from "./components/mentor/MentorDashboard";
+import MentorRegistrationForm from "./components/Auth/MentorRegistrationForm.jsx";
+import MentorVerificationPending from "./components/mentor/MentorVerificationPending.jsx"; // Import new component
+import { useState, useEffect } from "react";
 
-function RegisterRoute() {
+function RegisterRoute({ onRegistrationComplete }) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const role = searchParams.get("role") || "mentee";
-  return (
-    <RegistrationForm
-      onRegistrationComplete={() => navigate("/login")}
-      role={role}
-    />
-  );
+
+  if (role === "mentor") {
+    return (
+      <MentorRegistrationForm
+        onRegistrationComplete={(profile) => {
+          onRegistrationComplete(profile);
+          // Direct navigation based on verificationStatus after mentor registration
+          if (profile.verificationStatus === "verified") {
+            navigate("/mentor-dashboard");
+          } else {
+            navigate("/mentor-pending-verification");
+          }
+        }}
+      />
+    );
+  } else {
+    return (
+      <RegistrationForm
+        onRegistrationComplete={(profile) => {
+          onRegistrationComplete(profile);
+          navigate("/login");
+        }}
+        role={role}
+      />
+    );
+  }
 }
 
-function LoginRoute() {
+function LoginRoute({ onLoginComplete, userProfile }) {
   const navigate = useNavigate();
 
-  const checkExamStatus = () => {
-    // Check all possible exam results in localStorage
-    const careerPaths = ["software-developer", "data-scientist"];
-    const experienceLevels = ["Beginner", "Intermediate", "Junior", "Senior"];
+  const handleLoginSuccess = (profile) => {
+    onLoginComplete(profile);
 
-    for (const careerId of careerPaths) {
-      for (const level of experienceLevels) {
-        const storageKey = `examResults:${careerId}:${level}`;
-        try {
-          const stored = localStorage.getItem(storageKey);
-          if (stored) {
-            const results = JSON.parse(stored);
-            if (results.passed) {
-              // User has passed exams, navigate to dashboard with results
-              navigate("/dashboard", {
-                state: {
-                  examResults: results,
-                  careerTitle: results.careerTitle,
-                  experienceLevel: results.experienceLevel,
-                },
-              });
-              return;
-            }
-          }
-        } catch (error) {
-          console.error("Error checking exam results:", error);
-        }
+    if (profile.role === "mentor") {
+      if (profile.verificationStatus === "pending") {
+        navigate("/mentor-pending-verification");
+      } else if (profile.verificationStatus === "verified") {
+        navigate("/mentor-dashboard");
+      } else {
+        // Fallback for mentors with unexpected verificationStatus
+        navigate("/mentor-pending-verification");
       }
+      return;
     }
 
-    // No passed exams found, go to career selection
-    navigate("/career-selection");
+    // Mentee login logic
+    if (profile.hasCompletedExams) {
+      navigate("/welcome");
+    } else {
+      navigate("/career-selection");
+    }
   };
 
   return (
     <LoginForm
-      onLoginComplete={checkExamStatus}
+      onLoginComplete={handleLoginSuccess}
       onSwitchToRegister={() => navigate("/register")}
     />
   );
 }
 
 export default function App() {
+  const [userProfile, setUserProfile] = useState(() => {
+    try {
+      const storedProfile = localStorage.getItem("userProfile");
+      return storedProfile ? JSON.parse(storedProfile) : null;
+    } catch (error) {
+      console.error("Error parsing user profile from localStorage", error);
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    if (userProfile) {
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
+    } else {
+      localStorage.removeItem("userProfile");
+    }
+  }, [userProfile]);
+
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<LandPage role="mentee" />} />
-        <Route path="/mentee" element={<LandPage role="mentee" />} />
-        <Route path="/mentor" element={<LandPage role="mentor" />} />
-        <Route path="/register" element={<RegisterRoute />} />
-        <Route path="/login" element={<LoginRoute />} />
-        <Route path="/career-selection" element={<CareerSelection />} />
-        <Route path="/exam" element={<ExM />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/welcome" element={<Welcome />} />
-        <Route path="/mentee/session" element={<SessionPage />} />
-        <Route path="/mentee/connection" element={<MyConnection />} />
-        <Route path="/mentee/message" element={<ChatApp />} />
-        <Route path="/mentee/market" element={<Market />} />
-        <Route path="/mentee/report" element={<Report />} />
-        <Route path="/mentee/resource" element={<Resource />} />
-        <Route path="/mentors" element={<MentorDashboard/>}/>
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={<LandPage role="mentee" userProfile={userProfile} />}
+          />
+          <Route
+            path="/mentee"
+            element={<LandPage role="mentee" userProfile={userProfile} />}
+          />
+          <Route
+            path="/mentor"
+            element={<LandPage role="mentor" userProfile={userProfile} />}
+          />
+          <Route
+            path="/register"
+            element={<RegisterRoute onRegistrationComplete={setUserProfile} />}
+          />
+          <Route
+            path="/login"
+            element={
+              <LoginRoute
+                onLoginComplete={setUserProfile}
+                userProfile={userProfile}
+              />
+            }
+          />
+          <Route path="/career-selection" element={<CareerSelection />} />
+          <Route path="/exam" element={<ExM />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+
+          {/* mentee pqrt */}
+          <Route path="/mentee/welcome" element={<Welcome />} />
+          <Route path="/mentee/session" element={<SessionPage />} />
+          <Route path="/mentee/connection" element={<MyConnection />} />
+          <Route path="/mentee/find" element={<FindBook />} />
+          <Route path="/mentee/message" element={<ChatApp />} />
+          <Route path="/mentee/market" element={<Market />} />
+          <Route path="/mentee/report" element={<Report />} />
+          <Route path="/mentee/resource" element={<Resource />} />
+          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+          <Route
+            path="/mentor-pending-verification"
+            element={<MentorVerificationPending />}
+          />
+        </Routes>
+      </Router>
+    </>
   );
 }

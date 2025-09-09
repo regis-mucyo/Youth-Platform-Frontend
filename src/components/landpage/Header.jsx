@@ -17,14 +17,14 @@ const Header = ({ currentRole = "mentee" }) => {
   ];
 
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white/90 backdrop-blur supports-[backdrop-filter]:bg-white/70 shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16 sm:h-18 lg:h-20">
           {/* Text Logo */}
           <div className="flex-shrink-0 font-bold text-xl sm:text-2xl lg:text-3xl">
             <Link
               to={currentRole === "mentor" ? "/mentor" : "/mentee"}
-              className="text-green-600 no-underline hover:text-green-700 transition-colors duration-200"
+              className="text-blue-600 no-underline hover:text-blue-700 transition-colors duration-200"
               style={{ fontFamily: "Poppins, sans-serif" }}
             >
               elevateLink
@@ -48,24 +48,24 @@ const Header = ({ currentRole = "mentee" }) => {
           <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
             <Link
               to="/mentee"
-              className={`px-3 xl:px-4 py-2 rounded-md text-xs xl:text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                currentRole === "mentee"
-                  ? "bg-green-600 text-white"
+              className={`px-3 xl:px-4 py-2 rounded-md text-xs xl:text-sm font-medium transition-colors duration-200 whitespace-nowrap ${currentRole === "mentee"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+                }`}
             >
               I am a Mentee
             </Link>
+
             <Link
               to="/mentor"
-              className={`px-3 xl:px-4 py-2 rounded-md text-xs xl:text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
-                currentRole === "mentor"
-                  ? "bg-green-600 text-white"
+              className={`px-3 xl:px-4 py-2 rounded-md text-xs xl:text-sm font-medium transition-colors duration-200 whitespace-nowrap ${currentRole === "mentor"
+                  ? "bg-blue-600 text-white"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-              }`}
+                }`}
             >
               Become a Mentor
             </Link>
+
             <Link
               to="/login"
               className="text-green-600 px-3 xl:px-4 py-2 rounded-md text-xs xl:text-sm font-medium hover:text-green-700 transition-colors duration-200 whitespace-nowrap"
@@ -132,22 +132,21 @@ const Header = ({ currentRole = "mentee" }) => {
                   <Link
                     to="/mentee"
                     onClick={() => setIsMenuOpen(false)}
-                    className={`text-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      currentRole === "mentee"
+                    className={`text-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors duration-200 ${currentRole === "mentee"
                         ? "bg-green-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
+                      }`}
                   >
                     I am a Mentee
                   </Link>
+
                   <Link
                     to="/mentor"
                     onClick={() => setIsMenuOpen(false)}
-                    className={`text-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      currentRole === "mentor"
+                    className={`text-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors duration-200 ${currentRole === "mentor"
                         ? "bg-green-600 text-white"
                         : "bg-gray-100 text-gray-700 hover:bg-gray-200"
-                    }`}
+                      }`}
                   >
                     Become a Mentor
                   </Link>

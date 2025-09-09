@@ -103,7 +103,7 @@ const ChatApp = () => {
                     placeholder="Search contacts..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
                 <div className="flex-1 overflow-y-auto">
@@ -160,7 +160,7 @@ const ChatApp = () => {
                         <div
                           className={`max-w-xs px-4 py-2 rounded-lg shadow-sm ${
                             isUser
-                              ? "bg-green-500 text-white"
+                              ? "bg-blue-500 text-white"
                               : "bg-white text-gray-800"
                           }`}
                         >
@@ -190,7 +190,7 @@ const ChatApp = () => {
                   />
                   <label
                     htmlFor="fileUpload"
-                    className="cursor-pointer text-gray-500 hover:text-green-600"
+                    className="cursor-pointer text-gray-500 hover:text-blue-600"
                   >
                     <Paperclip className="w-5 h-5" />
                   </label>
@@ -199,11 +199,11 @@ const ChatApp = () => {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                     placeholder="Type a message"
-                    className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                   <button
                     onClick={handleSend}
-                    className="px-3 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition flex items-center"
+                    className="px-3 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition flex items-center"
                   >
                     <Send className="w-4 h-4 mr-1" />
                     Send

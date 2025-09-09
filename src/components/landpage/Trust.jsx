@@ -91,8 +91,8 @@ const Trust = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-green-600" />
+              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Users className="w-8 h-8 text-blue-600" />
               </div>
               <h4 className="font-semibold text-gray-900 mb-2">
                 Talent Development
@@ -104,8 +104,8 @@ const Trust = () => {
             </div>
 
             <div className="text-center">
-              <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Globe className="w-8 h-8 text-green-600" />
+              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Globe className="w-8 h-8 text-blue-600" />
               </div>
               <h4 className="font-semibold text-gray-900 mb-2">
                 Global Network
@@ -117,8 +117,8 @@ const Trust = () => {
             </div>
 
             <div className="text-center">
-              <div className="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-green-600" />
+              <div className="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                <Award className="w-8 h-8 text-blue-600" />
               </div>
               <h4 className="font-semibold text-gray-900 mb-2">
                 Proven Results
@@ -136,7 +136,7 @@ const Trust = () => {
           <div className="mb-4">
             <p className="text-gray-600">Interested in partnering with us?</p>
           </div>
-          <button className="bg-green-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-green-700 transition-colors duration-200">
+          <button className="bg-blue-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors duration-200">
             Become a Partner
           </button>
         </div>
