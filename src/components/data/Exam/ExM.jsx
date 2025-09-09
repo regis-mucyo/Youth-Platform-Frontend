@@ -105,7 +105,7 @@ export default function ExM() {
         technicalResults,
         softResults,
         passed,
-        careerTitle: careerPaths[selectedCareerId]?.title || "",
+        careerTitle: userProfile?.fieldOfWork || "",
         experienceLevel: userProfile?.experienceLevel,
       });
     }

@@ -43,12 +43,15 @@ const ExamResults = ({
   const overallTechnicalPercentage = Math.round((technicalResults.correct / technicalResults.total) * 100);
   const overallSoftPercentage = Math.round((softResults.correct / softResults.total) * 100);
 
-  const hasPassedTechnical = overallTechnicalPercentage >= 70;
-  const hasPassedSoft = overallSoftPercentage >= 50;
-  const canProceed = hasPassedTechnical && hasPassedSoft;
-
   const handleProceedToDashboard = () => {
-    navigate('/dashboard');
+    // Update user profile to reflect exam completion
+    const userProfileString = localStorage.getItem('userProfile');
+    if (userProfileString) {
+      const userProfile = JSON.parse(userProfileString);
+      userProfile.hasCompletedExams = true;
+      localStorage.setItem('userProfile', JSON.stringify(userProfile));
+    }
+    navigate('/welcome');
   }
 
   return (
@@ -70,7 +73,7 @@ const ExamResults = ({
                 </span>
               </div>
               <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-gray-900">
-                {canProceed ? "Congratulations on completing your assessments!" : "Assessment Results"}
+                Assessment Complete!
               </h1>
               <p className="mt-2 text-gray-600 max-w-2xl">
                 Below are your scores for both Technical and Soft Skills assessments, each shown out of 100%.
@@ -99,8 +102,8 @@ const ExamResults = ({
             percentage={overallTechnicalPercentage}
             correct={technicalResults.correct}
             total={technicalResults.total}
-            pass={hasPassedTechnical}
-            passText=">= 70%"
+            pass={true}
+            passText="Score"
           />
 
           <StatBar
@@ -108,50 +111,27 @@ const ExamResults = ({
             percentage={overallSoftPercentage}
             correct={softResults.correct}
             total={softResults.total}
-            pass={hasPassedSoft}
-            passText=">= 50%"
+            pass={true}
+            passText="Score"
           />
         </div>
 
         {/* Result State */}
         <div className="mt-8 bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
           <div className="flex items-center justify-center gap-3 mb-4">
-            {canProceed ? (
-              <CheckCircle className="w-6 h-6 text-green-600" />
-            ) : (
-              <XCircle className="w-6 h-6 text-yellow-600" />
-            )}
-            <div className={`text-lg font-semibold ${canProceed ? "text-green-700" : "text-yellow-700"}`}>
-              {canProceed
-                ? "You met the requirements to proceed!"
-                : "Minimum requirements: Technical >= 70% and Soft >= 50%."}
+            <CheckCircle className="w-6 h-6 text-green-600" />
+            <div className={`text-lg font-semibold text-green-700`}>
+              Assessment Complete!
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            {canProceed ? (
-              <button
-                onClick={handleProceedToDashboard}
-                className="w-full sm:w-auto px-6 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
-              >
-                Proceed to Dashboard
-              </button>
-            ) : (
-              <>
-                <button
-                  onClick={onRetakeExam}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl border border-gray-300 text-gray-800 font-semibold hover:bg-gray-50 transition-colors"
-                >
-                  Retake Assessment
-                </button>
-                <button
-                  onClick={onBackToSelection}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-gray-100 text-gray-800 font-semibold hover:bg-gray-200 transition-colors"
-                >
-                  Back to Selection
-                </button>
-              </>
-            )}
+            <button
+              onClick={handleProceedToDashboard}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-green-600 text-white font-semibold hover:bg-green-700 transition-colors"
+            >
+              Proceed to Dashboard
+            </button>
           </div>
         </div>
       </div>

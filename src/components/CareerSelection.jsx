@@ -32,26 +32,25 @@ const CareerSelection = () => {
       "Data Science": ["data-scientist"],
       "Product Management": ["product-manager"],
       "Digital Marketing": ["digital-marketer"],
-      "UI/UX Design": ["software-developer"], // Map to software-developer for now
-      Cybersecurity: ["software-developer"], // Map to software-developer for now
+      "UI/UX Design": ["ui-ux-designer"], // Added new career path ID
+      "Cybersecurity": ["cybersecurity-specialist"], // Added new career path ID
       "Business": ["business"],
       "Business Analysis": ["business"],
-      "DevOps Engineering": ["software-developer"], // Map to software-developer for now
+      "DevOps Engineering": ["devops-engineer"], // Added new career path ID
     };
 
-    const relevantCareers = fieldMapping[userProfile.fieldOfWork] || [];
+    const relevantCareerIds = fieldMapping[userProfile.fieldOfWork] || [];
 
-    // Build complete list and mark recommended
-    const all = Object.keys(careerPaths).map((key) => ({
-      id: key,
-      ...careerPaths[key],
-      recommended: relevantCareers.includes(key),
-    }));
+    const filtered = Object.keys(careerPaths)
+      .filter(careerId => relevantCareerIds.includes(careerId))
+      .map(careerId => ({
+        id: careerId,
+        ...careerPaths[careerId],
+        // The 'recommended' flag is less relevant if we're strictly filtering, but keeping for potential future use.
+        recommended: true,
+      }));
 
-    // Sort with recommended first, keep all visible
-    all.sort((a, b) => (b.recommended === a.recommended ? 0 : b.recommended ? 1 : -1));
-
-    return all;
+    return filtered;
   };
 
   const availableCareers = getFilteredCareers();
