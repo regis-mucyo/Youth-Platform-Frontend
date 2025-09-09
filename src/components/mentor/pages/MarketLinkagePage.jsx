@@ -1,6 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { Search, Share2, MapPin, Clock, Users } from "lucide-react";
+import {
+  Search,
+  Share2,
+  MapPin,
+  Clock,
+  Users,
+  X,
+  Send,
+  CheckCircle,
+  Briefcase,
+  User,
+  Zap,
+} from "lucide-react";
 import { mockConnections, mockOpportunities } from "../data/mockData";
+
+// Custom Toast Component
+const Toast = ({ message, type, onClose }) => {
+  const bgColor =
+    type === "success"
+      ? "bg-green-600"
+      : type === "error"
+      ? "bg-red-600"
+      : "bg-blue-600";
+  const icon = type === "success" ? <CheckCircle /> : <Zap />;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000); // Auto-close after 3 seconds
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div
+      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 text-white px-6 py-3 rounded-full shadow-xl flex items-center transition-all duration-300 ease-in-out ${bgColor} opacity-95`}
+    >
+      <div className="mr-2">{icon}</div>
+      <span>{message}</span>
+    </div>
+  );
+};
 
 const MarketLinkagePage = () => {
   const [opportunities, setOpportunities] = useState([]);
@@ -8,6 +47,19 @@ const MarketLinkagePage = () => {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchTerm, setSearchTerm] = useState("");
   const [talentSearchTerm, setTalentSearchTerm] = useState("");
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [showDetailsModal, setShowDetailsModal] = useState(false);
+  const [showRecommendModal, setShowRecommendModal] = useState(false);
+  const [showApplicationModal, setShowApplicationModal] = useState(false);
+  const [selectedOpportunity, setSelectedOpportunity] = useState(null);
+  const [selectedMentees, setSelectedMentees] = useState([]);
+  const [recommendationMessage, setRecommendationMessage] = useState("");
+  const [applicationData, setApplicationData] = useState({
+    coverLetter: "",
+    resume: "",
+    portfolio: "",
+  });
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     setOpportunities(mockOpportunities);
@@ -37,25 +89,71 @@ const MarketLinkagePage = () => {
     setFilteredOpportunities(filtered);
   }, [opportunities, searchTerm, activeFilter]);
 
-  const handleShareOpportunity = (opportunityId) => {
-    console.log(`Sharing opportunity ${opportunityId}`);
+  const showToast = (message, type = "success") => {
+    setToast({ message, type });
   };
 
-  const handleRecommendTalent = (menteeId, opportunityId) => {
-    console.log(
-      `Recommending mentee ${menteeId} for opportunity ${opportunityId}`
-    );
-    alert(`Recommended talent for opportunity ${opportunityId}`);
+  const handleShareOpportunity = (opportunityId) => {
+    const opportunity = opportunities.find((opp) => opp.id === opportunityId);
+    setSelectedOpportunity(opportunity);
+    setShowShareModal(true);
+  };
+
+  const handleRecommendTalent = (opportunityId) => {
+    const opportunity = opportunities.find((opp) => opp.id === opportunityId);
+    setSelectedOpportunity(opportunity);
+    // Use the same selected mentees from the share modal
+    setShowRecommendModal(true);
   };
 
   const handleViewDetails = (opportunityId) => {
-    console.log(`Viewing details for opportunity ${opportunityId}`);
-    alert(`Opening details for opportunity ${opportunityId}`);
+    const opportunity = opportunities.find((opp) => opp.id === opportunityId);
+    setSelectedOpportunity(opportunity);
+    setShowDetailsModal(true);
   };
 
   const handleApplyToOpportunity = (opportunityId) => {
-    console.log(`Applying to opportunity ${opportunityId}`);
-    alert(`Application submitted for opportunity ${opportunityId}`);
+    const opportunity = opportunities.find((opp) => opp.id === opportunityId);
+    setSelectedOpportunity(opportunity);
+    setShowApplicationModal(true);
+  };
+
+  const handleShareSubmit = () => {
+    if (selectedMentees.length > 0) {
+      showToast(
+        `Opportunity shared with ${selectedMentees.length} mentee(s)!`,
+        "success"
+      );
+      setShowShareModal(false);
+    }
+  };
+
+  const handleRecommendSubmit = () => {
+    if (selectedMentees.length > 0 && recommendationMessage.trim()) {
+      showToast(
+        `Recommendation sent for ${selectedMentees.length} mentee(s)!`,
+        "success"
+      );
+      setShowRecommendModal(false);
+      setSelectedMentees([]);
+      setRecommendationMessage("");
+    }
+  };
+
+  const handleApplicationSubmit = () => {
+    if (applicationData.coverLetter.trim()) {
+      showToast(`Application submitted successfully!`, "success");
+      setShowApplicationModal(false);
+      setApplicationData({ coverLetter: "", resume: "", portfolio: "" });
+    }
+  };
+
+  const handleMenteeSelection = (menteeId) => {
+    setSelectedMentees((prevSelected) =>
+      prevSelected.includes(menteeId)
+        ? prevSelected.filter((id) => id !== menteeId)
+        : [...prevSelected, menteeId]
+    );
   };
 
   return (
@@ -242,6 +340,11 @@ const MarketLinkagePage = () => {
                       >
                         {opportunity.type}
                       </span>
+                      {opportunity.level && (
+                        <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-700">
+                          {opportunity.level}
+                        </span>
+                      )}
                     </div>
                     <p className="text-sm text-gray-600 mb-2">
                       {opportunity.company}
@@ -304,7 +407,7 @@ const MarketLinkagePage = () => {
                       View Details
                     </button>
                     <button
-                      onClick={() => handleRecommendTalent(1, opportunity.id)}
+                      onClick={() => handleRecommendTalent(opportunity.id)}
                       className="px-3 py-1 bg-green-500 text-white text-sm rounded-lg hover:bg-green-600 transition-colors"
                     >
                       Recommend
@@ -338,6 +441,292 @@ const MarketLinkagePage = () => {
           </div>
         )}
       </div>
+
+      {/* Share Opportunity Modal */}
+      {showShareModal && (
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Share Opportunity</h3>
+              <button onClick={() => setShowShareModal(false)}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Share "{selectedOpportunity?.title}" with your mentees
+            </p>
+            <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
+              {mockConnections.mentees.map((mentee) => (
+                <label key={mentee.id} className="flex items-center space-x-2">
+                  <input
+                    type="checkbox"
+                    checked={selectedMentees.includes(mentee.id)}
+                    onChange={() => handleMenteeSelection(mentee.id)}
+                    className="rounded"
+                  />
+                  <span className="text-sm">{mentee.name}</span>
+                </label>
+              ))}
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowShareModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleShareSubmit}
+                disabled={selectedMentees.length === 0}
+                className="flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:bg-gray-300"
+              >
+                Share
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Opportunity Details Modal */}
+      {showDetailsModal && (
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-96 overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Opportunity Details</h3>
+              <button onClick={() => setShowDetailsModal(false)}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            {selectedOpportunity && (
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-lg">
+                    {selectedOpportunity.title}
+                  </h4>
+                  <p className="text-gray-600">{selectedOpportunity.company}</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium">Type:</span>{" "}
+                    {selectedOpportunity.type}
+                  </div>
+                  {selectedOpportunity.level && (
+                    <div>
+                      <span className="font-medium">Level:</span>{" "}
+                      {selectedOpportunity.level}
+                    </div>
+                  )}
+                  <div>
+                    <span className="font-medium">Location:</span>{" "}
+                    {selectedOpportunity.location}
+                  </div>
+                  <div>
+                    <span className="font-medium">Duration:</span>{" "}
+                    {selectedOpportunity.duration}
+                  </div>
+                  <div>
+                    <span className="font-medium">Salary:</span>{" "}
+                    {selectedOpportunity.salary}
+                  </div>
+                  <div>
+                    <span className="font-medium">Deadline:</span>{" "}
+                    {selectedOpportunity.deadline}
+                  </div>
+                  <div>
+                    <span className="font-medium">Applicants:</span>{" "}
+                    {selectedOpportunity.applicants}
+                  </div>
+                </div>
+                <div>
+                  <span className="font-medium">Description:</span>
+                  <p className="text-gray-700 mt-1">
+                    {selectedOpportunity.description}
+                  </p>
+                </div>
+                <div>
+                  <span className="font-medium">Required Skills:</span>
+                  <div className="flex flex-wrap gap-2 mt-1">
+                    {selectedOpportunity.skills?.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Recommend Talent Modal */}
+      {showRecommendModal && (
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-smbg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Recommend Talent</h3>
+              <button onClick={() => setShowRecommendModal(false)}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Recommend mentees for "{selectedOpportunity?.title}"
+            </p>
+            <div className="space-y-2 mb-4 max-h-48 overflow-y-auto">
+              {selectedMentees.length > 0 ? (
+                selectedMentees.map((menteeId) => {
+                  const mentee = mockConnections.mentees.find(
+                    (m) => m.id === menteeId
+                  );
+                  if (!mentee) return null;
+                  return (
+                    <div
+                      key={mentee.id}
+                      className="flex items-center space-x-2 p-1 rounded-md bg-green-100" // Reduced padding and removed ring
+                    >
+                      <User className="w-6 h-6 text-gray-500 bg-gray-200 rounded-full p-0.5" />{" "}
+                      {/* Smaller icon */}
+                      <div className="flex-1">
+                        <h4 className="font-medium text-sm text-gray-900">
+                          {mentee.name}
+                        </h4>{" "}
+                        {/* Smaller text */}
+                        <p className="text-xs text-gray-500">{mentee.field}</p>
+                      </div>
+                      <CheckCircle className="text-green-500 w-4 h-4" />{" "}
+                      {/* Smaller check icon */}
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="text-center text-gray-500 py-4">
+                  No mentees selected. Please select mentees from the "Share"
+                  option first.
+                </div>
+              )}
+            </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Recommendation Message
+              </label>
+              <textarea
+                value={recommendationMessage}
+                onChange={(e) => setRecommendationMessage(e.target.value)}
+                placeholder="Write your recommendation message..."
+                rows={3}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+              />
+            </div>
+            <div className="flex space-x-3">
+              <button
+                onClick={() => setShowRecommendModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleRecommendSubmit}
+                disabled={
+                  !recommendationMessage.trim() || selectedMentees.length === 0
+                }
+                className="flex-1 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:bg-gray-300"
+              >
+                Send Recommendation
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Application Modal */}
+      {showApplicationModal && (
+        <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-lg max-h-96 overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Apply to Opportunity</h3>
+              <button onClick={() => setShowApplicationModal(false)}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              Apply for "{selectedOpportunity?.title}" at{" "}
+              {selectedOpportunity?.company}
+            </p>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Cover Letter *
+                </label>
+                <textarea
+                  value={applicationData.coverLetter}
+                  onChange={(e) =>
+                    setApplicationData({
+                      ...applicationData,
+                      coverLetter: e.target.value,
+                    })
+                  }
+                  placeholder="Write your cover letter..."
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Resume/CV
+                </label>
+                <input
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Portfolio URL
+                </label>
+                <input
+                  type="url"
+                  value={applicationData.portfolio}
+                  onChange={(e) =>
+                    setApplicationData({
+                      ...applicationData,
+                      portfolio: e.target.value,
+                    })
+                  }
+                  placeholder="https://your-portfolio.com"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
+            <div className="flex space-x-3 mt-6">
+              <button
+                onClick={() => setShowApplicationModal(false)}
+                className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleApplicationSubmit}
+                disabled={!applicationData.coverLetter.trim()}
+                className="flex-1 px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 disabled:bg-gray-300"
+              >
+                Submit Application
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 };
