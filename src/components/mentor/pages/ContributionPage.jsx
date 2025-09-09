@@ -1,13 +1,6 @@
-// src/mentor/components/pages/MyContributionPage.jsx
 import React from "react";
-import { BarChart3 } from "lucide-react";
 
-// 🇷🇼 Rwanda Flag Colors — ONLY
-const RWANDA_BLUE = "#00A1DE";
-const RWANDA_YELLOW = "#FFDD00";
-const RWANDA_GREEN = "#00A651";
-
-const MyContributionPage = () => {
+const ContributionPage = () => {
   return (
     <div className="space-y-6">
       <div>
@@ -18,6 +11,7 @@ const MyContributionPage = () => {
           Track your mentoring impact and achievements
         </p>
       </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Impact Summary */}
         <div className="bg-white rounded-lg border border-gray-200 p-6">
@@ -39,17 +33,16 @@ const MyContributionPage = () => {
             </div>
           </div>
         </div>
+
         {/* Milestone Tracker */}
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-6">
             Milestone Tracker
           </h2>
           <div className="space-y-4">
+            {/* Completed Milestones */}
             <div className="flex items-center space-x-3">
-              <div
-                className="w-6 h-6 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: RWANDA_GREEN }}
-              >
+              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   className="w-4 h-4 text-white"
                   fill="currentColor"
@@ -64,11 +57,9 @@ const MyContributionPage = () => {
               </div>
               <span className="text-gray-700">Completed First Session</span>
             </div>
+
             <div className="flex items-center space-x-3">
-              <div
-                className="w-6 h-6 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: RWANDA_GREEN }}
-              >
+              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   className="w-4 h-4 text-white"
                   fill="currentColor"
@@ -83,11 +74,9 @@ const MyContributionPage = () => {
               </div>
               <span className="text-gray-700">Reached 5 Sessions</span>
             </div>
+
             <div className="flex items-center space-x-3">
-              <div
-                className="w-6 h-6 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: RWANDA_GREEN }}
-              >
+              <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
                 <svg
                   className="w-4 h-4 text-white"
                   fill="currentColor"
@@ -102,6 +91,8 @@ const MyContributionPage = () => {
               </div>
               <span className="text-gray-700">Mentored 100+ Hours</span>
             </div>
+
+            {/* Progress Milestone */}
             <div className="flex items-center space-x-3">
               <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center">
                 <div className="w-3 h-3 bg-gray-500 rounded-full"></div>
@@ -113,68 +104,52 @@ const MyContributionPage = () => {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 mt-2">
                   <div
-                    className="bg-green-500 h-2 rounded-full"
-                    style={{ width: "36%", backgroundColor: RWANDA_GREEN }}
+                    className="bg-blue-500 h-2 rounded-full"
+                    style={{ width: "36%" }}
                   ></div>
                 </div>
               </div>
             </div>
-            <button
-              className="w-full mt-6 bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-4 rounded-lg transition-colors"
-              style={{ backgroundColor: RWANDA_GREEN }}
-            >
+
+            {/* Print Certificate Button */}
+            <button className="w-full mt-6 bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-colors">
               Print Certificate
             </button>
           </div>
         </div>
       </div>
+
       {/* Additional Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="text-center">
-            <div
-              className="text-2xl font-bold mb-1"
-              style={{ color: RWANDA_GREEN }}
-            >
-              4.9
-            </div>
+            <div className="text-2xl font-bold text-blue-500 mb-1">4.9</div>
             <div className="text-sm text-gray-600">Average Rating</div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="text-center">
-            <div
-              className="text-2xl font-bold mb-1"
-              style={{ color: RWANDA_BLUE }}
-            >
-              95%
-            </div>
+            <div className="text-2xl font-bold text-blue-500 mb-1">95%</div>
             <div className="text-sm text-gray-600">Session Completion</div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="text-center">
-            <div
-              className="text-2xl font-bold mb-1"
-              style={{ color: RWANDA_YELLOW }}
-            >
-              12
-            </div>
+            <div className="text-2xl font-bold text-purple-500 mb-1">12</div>
             <div className="text-sm text-gray-600">Certificates Earned</div>
           </div>
         </div>
+
         <div className="bg-white rounded-lg border border-gray-200 p-4">
           <div className="text-center">
-            <div
-              className="text-2xl font-bold mb-1"
-              style={{ color: RWANDA_GREEN }}
-            >
-              8
-            </div>
+            <div className="text-2xl font-bold text-orange-500 mb-1">8</div>
             <div className="text-sm text-gray-600">Skills Shared</div>
           </div>
         </div>
       </div>
+
       {/* Recent Achievements */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
@@ -182,10 +157,7 @@ const MyContributionPage = () => {
         </h2>
         <div className="space-y-3">
           <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: RWANDA_GREEN }}
-            >
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white"
                 fill="currentColor"
@@ -204,11 +176,9 @@ const MyContributionPage = () => {
             </div>
             <div className="text-xs text-gray-400 ml-auto">2 days ago</div>
           </div>
+
           <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center"
-              style={{ backgroundColor: RWANDA_BLUE }}
-            >
+            <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
               <svg
                 className="w-4 h-4 text-white"
                 fill="currentColor"
@@ -237,4 +207,4 @@ const MyContributionPage = () => {
   );
 };
 
-export default MyContributionPage;
+export default ContributionPage;
