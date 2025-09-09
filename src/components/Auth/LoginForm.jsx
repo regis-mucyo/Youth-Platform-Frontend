@@ -43,23 +43,45 @@ const LoginForm = ({ onLoginComplete, onSwitchToRegister }) => {
 
         // Simulate API call
         setTimeout(() => {
-            // Mock user data - in real app, this would come from API
-            const mockUserProfile = {
-                fullName: "John Doe",
-                email: formData.email,
-                phone: "+1234567890",
-                location: "New York, NY",
-                gender: "Male",
-                bio: "Experienced software developer passionate about creating innovative solutions.",
-                fieldOfWork: "Software Development",
-                experienceLevel: "Senior",
+            let profile = null;
+            try {
+                const storedProfileString = localStorage.getItem('userProfile');
+                if (storedProfileString) {
+                    const storedProfile = JSON.parse(storedProfileString);
+                    // Check if the stored profile matches the logged-in email
+                    if (storedProfile.email === formData.email) {
+                        profile = storedProfile;
+                    }
+                }
+            } catch (error) {
+                console.error("Error parsing user profile from localStorage", error);
             }
 
-            // Store user profile for exam system
-            localStorage.setItem('userProfile', JSON.stringify(mockUserProfile));
+            // If no matching profile found, or if profile is null, create a default mentee profile
+            if (!profile) {
+                profile = {
+                    fullName: "Guest User", // A generic name for new/unrecognized logins
+                    email: formData.email,
+                    bio: "",
+                    fieldOfWork: "",
+                    experienceLevel: "Intermediate",
+                    role: "mentee", // Default to mentee if no matching profile found
+                    hasCompletedExams: false,
+                    verificationStatus: "", // No verification status for default mentee
+                };
+            }
+
+            // Update login-specific fields (email should always be current)
+            profile = {
+                ...profile,
+                email: formData.email,
+            };
+
+            // Persist updated profile
+            localStorage.setItem('userProfile', JSON.stringify(profile));
 
             setIsLoading(false)
-            onLoginComplete(mockUserProfile)
+            onLoginComplete(profile)
         }, 1500)
     }
 
