@@ -29,7 +29,7 @@ const data = {
       description:
         "Guides devs on interviews and career growth. Loves mentoring engineers.",
     },
-        {
+    {
       photo: "https://randomuser.me/api/portraits/men/32.jpg",
       name: "Michael Rodriguez",
       title: "Tech Lead",
@@ -70,9 +70,17 @@ const Myconnection = () => {
 
   return (
     <div className="flex h-screen bg-gray-50 font-[Poppins]">
-      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen} activeItem="My Connections" />
+      <Sidebar
+        open={sidebarOpen}
+        setOpen={setSidebarOpen}
+        activeItem="My Connections"
+      />
       <div className="flex flex-col flex-1">
-        <Header setSidebarOpen={setSidebarOpen} dashboard={'My Connection'}  description={'View and manage your mentor and mentee relationship.'}/>
+        <Header
+          setSidebarOpen={setSidebarOpen}
+          dashboard={"My Connection"}
+          description={"View and manage your mentor and mentee relationship."}
+        />
         <main className="p-4 sm:p-6 overflow-y-auto">
           <section className="py-10 px-4">
             {/* Tabs */}
@@ -142,9 +150,7 @@ const Myconnection = () => {
                   </p>
 
                   <button className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
-                    {activeTab === "Mentor"
-                      ? "Book Session"
-                      : "Message"}
+                    {activeTab === "Mentor" ? "Book Session" : "Message"}
                   </button>
                 </div>
               ))}
