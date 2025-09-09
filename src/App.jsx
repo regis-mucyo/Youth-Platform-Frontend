@@ -1,5 +1,5 @@
 import SessionPage from "./components/mentee/SessionPage";
-import Connection from "./components/mentee/MyConnection";
+import Connection from "./components/mentee/MyConnection.jsx";
 import ChatApp from "./components/mentee/Message";
 import Market from "./components/mentee/Market";
 import Report from "./components/mentee/Report";
