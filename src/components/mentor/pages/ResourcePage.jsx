@@ -1,13 +1,127 @@
 import React, { useState, useEffect } from "react";
-import { Search, FileText, Download, Star, Eye, Plus } from "lucide-react";
-import { mockResources } from "../data/mockData";
+import {
+  Search,
+  FileText,
+  Download,
+  Star,
+  Eye,
+  Plus,
+  Filter,
+  X,
+  Upload,
+  CheckCircle,
+  Zap,
+} from "lucide-react";
+
+// Mock data to simulate API responses
+const mockResources = [
+  {
+    id: 1,
+    title: "Introduction to React Hooks",
+    type: "Document",
+    topic: "Frontend Development",
+    level: "Intermediate",
+    description:
+      "A comprehensive guide to using React Hooks for state management and side effects.",
+    uploadDate: "2023-09-10",
+    downloads: 120,
+    rating: 4.8,
+    url: "#",
+  },
+  {
+    id: 2,
+    title: "Mastering CSS Grid",
+    type: "Video",
+    topic: "Web Design",
+    level: "Advanced",
+    description: "A video tutorial on building complex layouts with CSS Grid.",
+    uploadDate: "2023-08-25",
+    downloads: 85,
+    rating: 4.5,
+    url: "#",
+  },
+  {
+    id: 3,
+    title: "Full-Stack Roadmap 2024",
+    type: "Link",
+    topic: "Career",
+    level: "Beginner",
+    description:
+      "An interactive roadmap detailing the skills needed to become a full-stack developer.",
+    uploadDate: "2024-01-15",
+    downloads: 300,
+    rating: 4.9,
+    url: "#",
+  },
+  {
+    id: 4,
+    title: "The Ultimate Project Management Template",
+    type: "Template",
+    topic: "Productivity",
+    level: "All Levels",
+    description:
+      "A customizable Notion template for managing personal and team projects.",
+    uploadDate: "2023-11-01",
+    downloads: 210,
+    rating: 4.7,
+    url: "#",
+  },
+  {
+    id: 5,
+    title: "Git & GitHub Crash Course",
+    type: "Video",
+    topic: "Version Control",
+    level: "Beginner",
+    description:
+      "A short course to get you started with Git and collaborating on GitHub.",
+    uploadDate: "2023-10-05",
+    downloads: 155,
+    rating: 4.6,
+    url: "#",
+  },
+  {
+    id: 6,
+    title: "Portfolio Review Checklist",
+    type: "Document",
+    topic: "Career",
+    level: "Intermediate",
+    description:
+      "A step-by-step checklist to optimize your portfolio for job applications.",
+    uploadDate: "2023-12-20",
+    downloads: 95,
+    rating: 4.5,
+    url: "#",
+  },
+];
+
+// Custom Toast Component
+const Toast = ({ message, type, onClose }) => {
+  const bgColor =
+    type === "success"
+      ? "bg-green-600"
+      : type === "error"
+      ? "bg-red-600"
+      : "bg-blue-600";
+  const icon = type === "success" ? <CheckCircle /> : <Zap />;
+
+  return (
+    <div
+      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 text-white px-6 py-3 rounded-full shadow-xl flex items-center transition-all duration-300 ease-in-out ${bgColor} opacity-95 z-50`}
+    >
+      <div className="mr-2">{icon}</div>
+      <span>{message}</span>
+    </div>
+  );
+};
 
 const ResourcePage = () => {
-  const [resources, setResources] = useState([]);
-  const [filteredResources, setFilteredResources] = useState([]);
+  const [resources, setResources] = useState(mockResources);
+  const [filteredResources, setFilteredResources] = useState(mockResources);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedType, setSelectedType] = useState("All Types");
   const [showUploadForm, setShowUploadForm] = useState(false);
+  const [showResourceModal, setShowResourceModal] = useState(false);
+  const [selectedResource, setSelectedResource] = useState(null);
   const [newResource, setNewResource] = useState({
     title: "",
     type: "",
@@ -16,11 +130,19 @@ const ResourcePage = () => {
     description: "",
     url: "",
   });
+  const [toast, setToast] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [downloadingStates, setDownloadingStates] = useState({});
 
-  useEffect(() => {
-    setResources(mockResources);
-    setFilteredResources(mockResources);
-  }, []);
+  // Function to display a toast message with optional auto-close
+  const showToast = (message, type = "success", autoClose = true) => {
+    setToast({ message, type });
+    if (autoClose) {
+      setTimeout(() => {
+        setToast(null);
+      }, 3000); // Auto-close after 3 seconds
+    }
+  };
 
   useEffect(() => {
     let filtered = resources.filter(
@@ -37,8 +159,17 @@ const ResourcePage = () => {
     setFilteredResources(filtered);
   }, [resources, searchTerm, selectedType]);
 
-  const handleUploadResource = () => {
-    if (newResource.title && newResource.type) {
+  const handleUploadResource = async () => {
+    if (!newResource.title || !newResource.type) {
+      showToast("Please fill out the required fields.", "error");
+      return;
+    }
+    setIsLoading(true);
+    showToast("Uploading...", "info", false);
+    try {
+      // Simulate an API call
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
       const resource = {
         id: resources.length + 1,
         ...newResource,
@@ -58,10 +189,22 @@ const ResourcePage = () => {
         url: "",
       });
       setShowUploadForm(false);
+      setToast(null); // Manually clear the loading toast
+      showToast("Resource uploaded successfully!");
+    } catch (error) {
+      setToast(null); // Manually clear the loading toast
+      showToast("Upload failed! Please try again.", "error");
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const handleDownload = (resourceId) => {
+  const handleDownload = async (resourceId) => {
+    setDownloadingStates((prev) => ({ ...prev, [resourceId]: true }));
+
+    // Simulate a network request delay
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     setResources((prev) =>
       prev.map((resource) =>
         resource.id === resourceId
@@ -69,12 +212,23 @@ const ResourcePage = () => {
           : resource
       )
     );
+
+    setDownloadingStates((prev) => ({ ...prev, [resourceId]: false }));
+    showToast(
+      `Downloaded: ${resources.find((r) => r.id === resourceId)?.title}`
+    );
+  };
+
+  const handleViewResource = (resourceId) => {
+    const resource = resources.find((r) => r.id === resourceId);
+    setSelectedResource(resource);
+    setShowResourceModal(true);
   };
 
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">My Resource</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">My Resources</h1>
         <p className="text-gray-600">
           Share knowledge and resources with your mentees
         </p>
@@ -257,9 +411,12 @@ const ResourcePage = () => {
             <div className="mt-6">
               <button
                 onClick={handleUploadResource}
-                className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+                disabled={isLoading}
+                className={`w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-6 rounded-lg transition-colors ${
+                  isLoading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
-                Upload Resource
+                {isLoading ? "Uploading..." : "Upload Resource"}
               </button>
             </div>
           </div>
@@ -298,6 +455,7 @@ const ResourcePage = () => {
               <option>Videos</option>
               <option>Links</option>
               <option>Tools</option>
+              <option>Templates</option>
             </select>
           </div>
         </div>
@@ -350,11 +508,23 @@ const ResourcePage = () => {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleDownload(resource.id)}
-                      className="px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors"
+                      disabled={downloadingStates[resource.id]}
+                      className={`px-2 py-1 bg-blue-500 text-white text-xs rounded hover:bg-blue-600 transition-colors ${
+                        downloadingStates[resource.id]
+                          ? "opacity-50 cursor-not-allowed"
+                          : ""
+                      }`}
                     >
-                      <Download className="w-3 h-3" />
+                      {downloadingStates[resource.id] ? (
+                        "Downloading..."
+                      ) : (
+                        <Download className="w-3 h-3" />
+                      )}
                     </button>
-                    <button className="px-2 py-1 border border-gray-300 text-gray-700 text-xs rounded hover:bg-gray-50 transition-colors">
+                    <button
+                      onClick={() => handleViewResource(resource.id)}
+                      className="px-2 py-1 border border-gray-300 text-gray-700 text-xs rounded hover:bg-gray-50 transition-colors"
+                    >
                       <Eye className="w-3 h-3" />
                     </button>
                   </div>
@@ -380,6 +550,96 @@ const ResourcePage = () => {
           </div>
         )}
       </div>
+
+      {/* Resource View Modal */}
+      {showResourceModal && (
+        <div className="fixed inset-0 m-auto bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-96 overflow-y-auto">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold">Resource Details</h3>
+              <button onClick={() => setShowResourceModal(false)}>
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            {selectedResource && (
+              <div className="space-y-4">
+                <div>
+                  <h4 className="font-medium text-lg">
+                    {selectedResource.title}
+                  </h4>
+                  <div className="flex items-center space-x-2 mt-1">
+                    <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
+                      {selectedResource.type}
+                    </span>
+                    <span className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded">
+                      {selectedResource.level}
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-4 text-sm">
+                  <div>
+                    <span className="font-medium">Topic:</span>{" "}
+                    {selectedResource.topic}
+                  </div>
+                  <div>
+                    <span className="font-medium">Upload Date:</span>{" "}
+                    {selectedResource.uploadDate}
+                  </div>
+                  <div>
+                    <span className="font-medium">Downloads:</span>{" "}
+                    {selectedResource.downloads}
+                  </div>
+                  <div>
+                    <span className="font-medium">Rating:</span>{" "}
+                    {selectedResource.rating}/5
+                  </div>
+                </div>
+                <div>
+                  <span className="font-medium">Description:</span>
+                  <p className="text-gray-700 mt-1">
+                    {selectedResource.description}
+                  </p>
+                </div>
+                <div className="flex space-x-3 pt-4">
+                  <button
+                    onClick={() => handleDownload(selectedResource.id)}
+                    disabled={downloadingStates[selectedResource.id]}
+                    className={`flex-1 px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center justify-center ${
+                      downloadingStates[selectedResource.id]
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                  >
+                    {downloadingStates[selectedResource.id] ? (
+                      "Downloading..."
+                    ) : (
+                      <>
+                        <Download className="w-4 h-4 mr-2" />
+                        Download
+                      </>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setShowResourceModal(false)}
+                    className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Render the Toast component */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 };
