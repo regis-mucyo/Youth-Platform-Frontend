@@ -77,7 +77,7 @@ function LoginRoute({ onLoginComplete, userProfile }) {
 
     // Mentee login logic
     if (profile.hasCompletedExams) {
-      navigate("/welcome");
+      navigate("/mentee/welcome");
     } else {
       navigate("/career-selection");
     }
