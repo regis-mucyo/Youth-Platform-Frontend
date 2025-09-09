@@ -24,6 +24,8 @@ import MentorRegistrationForm from "./components/Auth/MentorRegistrationForm.jsx
 import MentorVerificationPending from "./components/mentor/MentorVerificationPending.jsx"; // Import new component
 import Combine from "./components/mentor/Combine.jsx";
 import { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function RegisterRoute({ onRegistrationComplete }) {
   const navigate = useNavigate();
@@ -112,6 +114,18 @@ export default function App() {
 
   return (
     <>
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
       <Router>
         <Routes>
           <Route
@@ -156,21 +170,6 @@ export default function App() {
             path="/mentor-pending-verification"
             element={<MentorVerificationPending />}
           />
-          <Route path="/" element={<LandPage role="mentee" />} />
-          <Route path="/mentee" element={<LandPage role="mentee" />} />
-          <Route path="/mentor" element={<LandPage role="mentor" />} />
-          <Route path="/register" element={<RegisterRoute />} />
-          <Route path="/login" element={<LoginRoute />} />
-          <Route path="/career-selection" element={<CareerSelection />} />
-          <Route path="/exam" element={<ExM />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/welcome" element={<Welcome />} />
-          <Route path="/mentee/session" element={<SessionPage />} />
-          {/* <Route path="/mentee/connection" element={<MyConnection />} /> */}
-          <Route path="/mentee/message" element={<ChatApp />} />
-          <Route path="/mentee/market" element={<Market />} />
-          <Route path="/mentee/report" element={<Report />} />
-          <Route path="/mentee/resource" element={<Resource />} />
           <Route path="/mentor-dashboard" element={<Combine />} />
         </Routes>
       </Router>
