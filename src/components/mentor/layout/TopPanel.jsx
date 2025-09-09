@@ -1,8 +1,49 @@
 import React, { useState } from "react";
-import { Search, Bell, User, X } from "lucide-react";
+import {
+  Search,
+  Bell,
+  User,
+  X,
+  Edit2,
+  Save,
+  CheckCircle,
+  Zap,
+} from "lucide-react";
+
+// Custom Toast Component for notifications
+const Toast = ({ message, type, onClose }) => {
+  const bgColor =
+    type === "success"
+      ? "bg-green-600"
+      : type === "error"
+      ? "bg-red-600"
+      : "bg-blue-600";
+  const icon = type === "success" ? <CheckCircle /> : <Zap />;
+
+  return (
+    <div
+      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 text-white px-6 py-3 rounded-full shadow-xl flex items-center transition-all duration-300 ease-in-out ${bgColor} opacity-95 z-50`}
+    >
+      <div className="mr-2">{icon}</div>
+      <span>{message}</span>
+    </div>
+  );
+};
 
 const TopPanel = () => {
   const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [mentorProfile, setMentorProfile] = useState({
+    name: "Dr. Sarah Johnson",
+    title: "Senior Software Engineer",
+    bio: "Experienced mentor specializing in frontend development, React, and building scalable web applications. Passionate about helping new developers navigate their career paths.",
+    profileImageUrl: "https://placehold.co/100x100/A5B4FC/374151?text=SJ",
+    location: "San Francisco, CA",
+    experience: "12 years",
+    expertise: "Web Development, Machine Learning, UI/UX Design",
+  });
   const [notifications, setNotifications] = useState([
     {
       id: 1,
@@ -41,8 +82,18 @@ const TopPanel = () => {
       avatar: null,
     },
   ]);
+  const [toast, setToast] = useState(null);
 
   const unreadCount = notifications.filter((n) => n.unread).length;
+
+  const showToast = (message, type = "success", autoClose = true) => {
+    setToast({ message, type });
+    if (autoClose) {
+      setTimeout(() => {
+        setToast(null);
+      }, 3000); // Auto-close after 3 seconds
+    }
+  };
 
   const handleNotificationClick = (notificationId) => {
     setNotifications((prev) =>
@@ -52,6 +103,24 @@ const TopPanel = () => {
 
   const markAllAsRead = () => {
     setNotifications((prev) => prev.map((n) => ({ ...n, unread: false })));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setMentorProfile((prevProfile) => ({
+      ...prevProfile,
+      [name]: value,
+    }));
+  };
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    // In a real app, you would save this data to a database.
+    // Simulate a network delay
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    setIsEditing(false);
+    setIsSaving(false);
+    showToast("Profile updated successfully!", "success");
   };
 
   return (
@@ -165,10 +234,230 @@ const TopPanel = () => {
         </div>
 
         {/* User Avatar */}
-        <button className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white">
+        <button
+          onClick={() => setShowProfileModal(true)}
+          className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center text-white hover:bg-blue-600 transition-colors"
+        >
           <User size={16} />
         </button>
       </div>
+
+      {/* Profile Modal */}
+      {showProfileModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-xl shadow-2xl p-6 w-full max-w-lg">
+            {/* Modal Header */}
+            <div className="flex justify-between items-center border-b pb-4 mb-4">
+              <h3 className="text-xl font-bold text-gray-900">
+                Mentor Profile
+              </h3>
+              <button
+                onClick={() => setShowProfileModal(false)}
+                className="p-1 rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Profile Content */}
+            <div className="space-y-4">
+              <div className="flex items-center space-x-4">
+                <img
+                  src={mentorProfile.profileImageUrl}
+                  alt="Mentor"
+                  className="w-20 h-20 rounded-full object-cover shadow-sm"
+                />
+                <div className="flex-1">
+                  {!isEditing ? (
+                    <>
+                      <h4 className="text-lg font-semibold text-gray-800">
+                        {mentorProfile.name}
+                      </h4>
+                      <p className="text-sm text-gray-500">
+                        {mentorProfile.title}
+                      </p>
+                    </>
+                  ) : (
+                    <div className="space-y-2">
+                      <input
+                        type="text"
+                        name="name"
+                        value={mentorProfile.name}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Your Name"
+                      />
+                      <input
+                        type="text"
+                        name="title"
+                        value={mentorProfile.title}
+                        onChange={handleChange}
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Your Title"
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  About Me
+                </label>
+                {!isEditing ? (
+                  <p className="text-sm text-gray-600">{mentorProfile.bio}</p>
+                ) : (
+                  <textarea
+                    name="bio"
+                    value={mentorProfile.bio}
+                    onChange={handleChange}
+                    rows="4"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                    placeholder="Tell us about yourself..."
+                  />
+                )}
+              </div>
+
+              {/* New Fields */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Location
+                  </label>
+                  {!isEditing ? (
+                    <p className="text-sm text-gray-600">
+                      {mentorProfile.location}
+                    </p>
+                  ) : (
+                    <input
+                      type="text"
+                      name="location"
+                      value={mentorProfile.location}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="e.g., San Francisco, CA"
+                    />
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Years of Experience
+                  </label>
+                  {!isEditing ? (
+                    <p className="text-sm text-gray-600">
+                      {mentorProfile.experience}
+                    </p>
+                  ) : (
+                    <input
+                      type="text"
+                      name="experience"
+                      value={mentorProfile.experience}
+                      onChange={handleChange}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      placeholder="e.g., 10 years"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Area of Expertise
+                </label>
+                {!isEditing ? (
+                  <p className="text-sm text-gray-600">
+                    {mentorProfile.expertise}
+                  </p>
+                ) : (
+                  <input
+                    type="text"
+                    name="expertise"
+                    value={mentorProfile.expertise}
+                    onChange={handleChange}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    placeholder="e.g., React, Python, UI/UX"
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="mt-6 flex justify-end space-x-3">
+              {!isEditing ? (
+                <button
+                  onClick={() => setIsEditing(true)}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center transition-colors"
+                >
+                  <Edit2 size={16} className="mr-2" />
+                  Edit Profile
+                </button>
+              ) : (
+                <>
+                  <button
+                    onClick={() => setIsEditing(false)}
+                    disabled={isSaving}
+                    className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={handleSave}
+                    disabled={isSaving}
+                    className={`px-4 py-2 bg-green-500 text-white rounded-lg flex items-center transition-colors ${
+                      isSaving
+                        ? "opacity-50 cursor-not-allowed"
+                        : "hover:bg-green-600"
+                    }`}
+                  >
+                    {isSaving ? (
+                      <>
+                        <span className="flex items-center justify-center mr-2">
+                          <svg
+                            className="animate-spin h-4 w-4 text-white"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                          >
+                            <circle
+                              className="opacity-25"
+                              cx="12"
+                              cy="12"
+                              r="10"
+                              stroke="currentColor"
+                              strokeWidth="4"
+                            ></circle>
+                            <path
+                              className="opacity-75"
+                              fill="currentColor"
+                              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                            ></path>
+                          </svg>
+                        </span>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        <Save size={16} className="mr-2" />
+                        Save Changes
+                      </>
+                    )}
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Render the Toast component */}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
+      )}
     </div>
   );
 };
