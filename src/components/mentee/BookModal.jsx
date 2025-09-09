@@ -2,7 +2,6 @@ import  { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { toast } from "react-toastify";
 import Calendar from "react-calendar";
-import "react-calendar/dist/Calendar.css";
 const BookingModal = ({ mentor, onClose }) => {
   const [topic, setTopic] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
