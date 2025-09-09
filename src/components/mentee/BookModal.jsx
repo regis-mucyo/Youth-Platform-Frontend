@@ -133,6 +133,7 @@ const BookingModal = ({ mentor, onClose }) => {
           >
             Book Session
           </button>
+         <p classname="mt-6"><p/>
         </div>
       </div>
 
