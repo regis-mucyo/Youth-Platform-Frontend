@@ -30,21 +30,27 @@ const CareerSelection = () => {
     const fieldMapping = {
       "Software Development": ["software-developer"],
       "Data Science": ["data-scientist"],
-      "Product Management": ["software-developer"], // Map to software-developer for now
-      "Digital Marketing": ["software-developer"], // Map to software-developer for now
-      "UI/UX Design": ["software-developer"], // Map to software-developer for now
-      Cybersecurity: ["software-developer"], // Map to software-developer for now
-      "Business Analysis": ["data-scientist"], // Map to data-scientist for now
-      "DevOps Engineering": ["software-developer"], // Map to software-developer for now
+      "Product Management": ["product-manager"],
+      "Digital Marketing": ["digital-marketer"],
+      "UI/UX Design": ["ui-ux-designer"], // Added new career path ID
+      "Cybersecurity": ["cybersecurity-specialist"], // Added new career path ID
+      "Business": ["business"],
+      "Business Analysis": ["business"],
+      "DevOps Engineering": ["devops-engineer"], // Added new career path ID
     };
 
-    const relevantCareers = fieldMapping[userProfile.fieldOfWork] || [];
-    const filtered = Object.keys(careerPaths)
-      .filter(key => relevantCareers.includes(key))
-      .map(key => ({ id: key, ...careerPaths[key] }));
+    const relevantCareerIds = fieldMapping[userProfile.fieldOfWork] || [];
 
-    // If no careers match, show all available careers
-    return filtered.length > 0 ? filtered : Object.keys(careerPaths).map(key => ({ id: key, ...careerPaths[key] }));
+    const filtered = Object.keys(careerPaths)
+      .filter(careerId => relevantCareerIds.includes(careerId))
+      .map(careerId => ({
+        id: careerId,
+        ...careerPaths[careerId],
+        // The 'recommended' flag is less relevant if we're strictly filtering, but keeping for potential future use.
+        recommended: true,
+      }));
+
+    return filtered;
   };
 
   const availableCareers = getFilteredCareers();
@@ -68,20 +74,22 @@ const CareerSelection = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <Briefcase className="w-8 h-8 text-green-600" />
-            <span className="text-sm font-semibold text-green-800 bg-green-100 px-3 py-1 rounded-full">
-              Career Selection
-            </span>
+        <div className="mb-8">
+          <div className="relative overflow-hidden rounded-2xl border border-gray-200 bg-gradient-to-r from-blue-50 via-white to-blue-50">
+            <div className="px-6 py-8 text-center">
+              <div className="inline-flex items-center gap-2 mb-3">
+                <Briefcase className="w-8 h-8 text-blue-600" />
+                <span className="text-sm font-semibold text-blue-800 bg-blue-100 px-3 py-1 rounded-full">Career Selection</span>
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Choose Your Career Path</h1>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Select the career path that best matches your goals. You'll take assessments tailored to your chosen career and experience level.
+              </p>
+            </div>
           </div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Choose Your Career Path</h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Select the career path that best matches your goals. You'll take assessments tailored to your chosen career and experience level.
-          </p>
         </div>
 
         {/* User Info */}
@@ -99,37 +107,39 @@ const CareerSelection = () => {
         {/* Career Options */}
         <div className="max-w-4xl mx-auto">
           {availableCareers.length > 0 ? (
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {availableCareers.map((career) => (
                 <div
                   key={career.id}
-                  className="bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow duration-200 overflow-hidden"
+                  className="bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-all duration-200 overflow-hidden hover:-translate-y-0.5"
                 >
                   <div className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-xl font-semibold text-gray-900">{career.title}</h3>
-                      <div className="bg-green-100 text-green-800 text-xs px-3 py-1 rounded-full">
-                        Recommended
-                      </div>
+                      {career.recommended && (
+                        <div className="bg-blue-100 text-blue-800 text-xs px-3 py-1 rounded-full">
+                          Recommended
+                        </div>
+                      )}
                     </div>
 
                     <p className="text-gray-600 text-sm mb-6">{career.description}</p>
 
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <BookOpen className="w-4 h-4 text-green-600" />
+                        <BookOpen className="w-4 h-4 text-blue-600" />
                         <span>
                           Technical: {countQuestions(career.technical, userProfile.experienceLevel)} questions
                         </span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <Users className="w-4 h-4 text-green-600" />
+                        <Users className="w-4 h-4 text-blue-600" />
                         <span>
                           Soft Skills: {countQuestions(career.soft, userProfile.experienceLevel)} questions
                         </span>
                       </div>
                       <div className="flex items-center gap-3 text-sm text-gray-600">
-                        <Clock className="w-4 h-4 text-green-600" />
+                        <Clock className="w-4 h-4 text-blue-600" />
                         <span>
                           Duration: {career.technical.duration + career.soft.duration} minutes
                         </span>
@@ -138,7 +148,7 @@ const CareerSelection = () => {
 
                     <button
                       onClick={() => handleCareerSelect(career.id)}
-                      className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2"
+                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors flex items-center justify-center gap-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     >
                       <Play className="w-5 h-5" />
                       Start {career.title} Assessment
