@@ -20,9 +20,9 @@ import RegistrationForm from "./components/Auth/RegistrationForm.jsx";
 import LoginForm from "./components/Auth/LoginForm.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import CareerSelection from "./components/CareerSelection.jsx";
-import MentorDashboard from "./components/mentor/MentorDashboard";
 import MentorRegistrationForm from "./components/Auth/MentorRegistrationForm.jsx";
 import MentorVerificationPending from "./components/mentor/MentorVerificationPending.jsx"; // Import new component
+import Combine from "./components/mentor/Combine.jsx";
 import { useState, useEffect } from "react";
 
 function RegisterRoute({ onRegistrationComplete }) {
@@ -57,7 +57,7 @@ function RegisterRoute({ onRegistrationComplete }) {
   }
 }
 
-function LoginRoute({ onLoginComplete, userProfile }) {
+function LoginRoute({ onLoginComplete }) {
   const navigate = useNavigate();
 
   const handleLoginSuccess = (profile) => {
@@ -152,11 +152,26 @@ export default function App() {
           <Route path="/mentee/market" element={<Market />} />
           <Route path="/mentee/report" element={<Report />} />
           <Route path="/mentee/resource" element={<Resource />} />
-          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
           <Route
             path="/mentor-pending-verification"
             element={<MentorVerificationPending />}
           />
+          <Route path="/" element={<LandPage role="mentee" />} />
+          <Route path="/mentee" element={<LandPage role="mentee" />} />
+          <Route path="/mentor" element={<LandPage role="mentor" />} />
+          <Route path="/register" element={<RegisterRoute />} />
+          <Route path="/login" element={<LoginRoute />} />
+          <Route path="/career-selection" element={<CareerSelection />} />
+          <Route path="/exam" element={<ExM />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/mentee/session" element={<SessionPage />} />
+          {/* <Route path="/mentee/connection" element={<MyConnection />} /> */}
+          <Route path="/mentee/message" element={<ChatApp />} />
+          <Route path="/mentee/market" element={<Market />} />
+          <Route path="/mentee/report" element={<Report />} />
+          <Route path="/mentee/resource" element={<Resource />} />
+          <Route path="/mentor-dashboard" element={<Combine />} />
         </Routes>
       </Router>
     </>
