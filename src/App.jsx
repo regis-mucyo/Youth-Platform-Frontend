@@ -1,5 +1,5 @@
 import SessionPage from "./components/mentee/SessionPage";
-import MyConnection from "./components/mentee/MyConnection";
+import Connection from "./components/mentee/MyConnection";
 import ChatApp from "./components/mentee/Message";
 import Market from "./components/mentee/Market";
 import Report from "./components/mentee/Report";
@@ -146,7 +146,7 @@ export default function App() {
           {/* mentee pqrt */}
           <Route path="/mentee/welcome" element={<Welcome />} />
           <Route path="/mentee/session" element={<SessionPage />} />
-          <Route path="/mentee/connection" element={<MyConnection />} />
+          <Route path="/mentee/connection" element={<Connection />} />
           <Route path="/mentee/find" element={<FindBook />} />
           <Route path="/mentee/message" element={<ChatApp />} />
           <Route path="/mentee/market" element={<Market />} />
