@@ -171,7 +171,7 @@ export default function App() {
           <Route path="/mentee/market" element={<Market />} />
           <Route path="/mentee/report" element={<Report />} />
           <Route path="/mentee/resource" element={<Resource />} />
-          <Route path="/mentors" element={<Combine />} />
+          <Route path="/mentor-dashboard" element={<Combine />} />
         </Routes>
       </Router>
     </>
