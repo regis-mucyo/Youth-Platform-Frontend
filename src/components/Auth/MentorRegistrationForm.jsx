@@ -3,9 +3,8 @@
 import { useState } from "react"
 import { useNavigate } from 'react-router-dom';
 
-const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "mentee" }) => {
+const MentorRegistrationForm = () => {
     const [currentStep, setCurrentStep] = useState(1)
-    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         fullName: "",
         email: "",
@@ -13,34 +12,30 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
         country: "", // New field for Country
         city: "",    // New field for City
         gender: "",
-        bio: "",
-        fieldOfWork: "",
-        experienceLevel: "",
+        bio: "", // More detailed bio for mentors
+        fieldOfExpertise: "",
+        yearsOfExperience: "",
+        mentoringTopics: "", // Comma-separated or multi-select
+        linkedinProfile: "", // New field for LinkedIn Profile
         password: "",
         confirmPassword: "",
-        // Mentor specific fields
-        title: "",
-        primaryExperience: "",
-        yearsOfExperience: "",
-        skills: "",
-        linkedinUrl: "",
     })
 
     const [errors, setErrors] = useState({})
+    const navigate = useNavigate();
 
     const fieldOptions = [
         "Software Development",
         "Data Science",
-        "Business",
-        "Business Analysis",
         "Product Management",
         "Digital Marketing",
         "UI/UX Design",
         "Cybersecurity",
         "DevOps Engineering",
+        "Business Analysis",
     ]
 
-    const experienceLevels = ["Beginner", "Intermediate", "Junior", "Senior"]
+    const experienceYearsOptions = ["0-2 years", "3-5 years", "6-10 years", "10+ years"]
 
     const genderOptions = ["Male", "Female", "Other", "Prefer not to say"]
 
@@ -76,22 +71,21 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
             } else if (formData.password !== formData.confirmPassword) {
                 newErrors.confirmPassword = "Passwords do not match"
             }
-            if (role === "mentor") {
-                if (!formData.title.trim()) newErrors.title = "Title is required"
-                if (!formData.primaryExperience.trim()) newErrors.primaryExperience = "Primary experience is required"
-                if (!formData.yearsOfExperience.trim()) newErrors.yearsOfExperience = "Years of experience is required"
-                if (!formData.skills.trim()) newErrors.skills = "Skills are required"
-                if (!formData.linkedinUrl.trim()) newErrors.linkedinUrl = "LinkedIn URL is required"
-            }
         } else if (step === 2) {
             if (!formData.country.trim()) newErrors.country = "Country is required"
             if (!formData.city.trim()) newErrors.city = "City is required"
             if (!formData.gender) newErrors.gender = "Gender is required"
-            if (!formData.bio.trim()) newErrors.bio = "Bio is required"
+            if (!formData.bio.trim()) newErrors.bio = "Bio is required (min 50 characters)"
+            else if (formData.bio.trim().length < 50) newErrors.bio = "Bio must be at least 50 characters"
+
         } else if (step === 3) {
-            if (role === "mentee") {
-                if (!formData.fieldOfWork) newErrors.fieldOfWork = "Field of work is required"
-                if (!formData.experienceLevel) newErrors.experienceLevel = "Experience level is required"
+            if (!formData.fieldOfExpertise) newErrors.fieldOfExpertise = "Field of expertise is required"
+            if (!formData.yearsOfExperience) newErrors.yearsOfExperience = "Years of experience is required"
+            if (!formData.mentoringTopics.trim()) newErrors.mentoringTopics = "Mentoring topics are required"
+            if (!formData.linkedinProfile.trim()) {
+                newErrors.linkedinProfile = "LinkedIn Profile URL is required";
+            } else if (!/^https?:\/\/[a-zA-Z0-9-.]+\.linkedin\.com(\/.*)?$/.test(formData.linkedinProfile)) {
+                newErrors.linkedinProfile = "Please enter a valid LinkedIn Profile URL";
             }
         }
 
@@ -104,20 +98,20 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
             if (currentStep < 3) {
                 setCurrentStep(currentStep + 1)
             } else {
-                onRegistrationComplete(formData)
-                // Persist minimal user profile used by assessment filtering
-                const profile = {
-                    fullName: formData.fullName,
-                    bio: formData.bio,
-                    country: formData.country,
-                    city: formData.city,
-                    fieldOfWork: formData.fieldOfWork,
-                    experienceLevel: formData.experienceLevel,
-                    role: role,  // store role from prop
-                    hasCompletedExams: false, // Initialize hasCompletedExams for mentees
+                // Simulate successful mentor registration and navigate to dashboard
+                console.log("Mentor Registration Data:", formData);
+                // In a real app, you would send this data to your backend
+                const mentorProfile = {
+                    ...formData,
+                    role: "mentor",
+                    verificationStatus: formData.linkedinProfile.trim() && /^https?:\/\/[a-zA-Z0-9-.]+\.linkedin\.com(\/.*)?$/.test(formData.linkedinProfile) ? "verified" : "pending", // Set status based on LinkedIn profile presence
+                };
+                localStorage.setItem('userProfile', JSON.stringify(mentorProfile));
+                if (mentorProfile.verificationStatus === "verified") {
+                    navigate('/mentor-dashboard');
+                } else {
+                    navigate('/mentor-pending-verification');
                 }
-                try { localStorage.setItem('userProfile', JSON.stringify(profile)) } catch { }
-                navigate('/career-selection');
             }
         }
     }
@@ -133,8 +127,8 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
             <div className="w-full max-w-md">
                 {/* Header */}
                 <div className="bg-green-500 text-white p-8 rounded-t-2xl text-center">
-                    <h1 className="text-2xl font-bold mb-2">Join as a {role === "mentor" ? "Mentor" : "Mentee"}</h1>
-                    <p className="text-green-100 mb-6">Let's get you started on your journey</p>
+                    <h1 className="text-2xl font-bold mb-2">Become a Mentor</h1>
+                    <p className="text-green-100 mb-6">Share your expertise and guide the next generation</p>
 
                     {/* Step Indicator */}
                     <div className="flex items-center justify-center space-x-4">
@@ -283,7 +277,7 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
                             <div>
                                 <label className="block text-gray-700 text-sm font-medium mb-2">Bio</label>
                                 <textarea
-                                    placeholder="Tell us a bit about yourself"
+                                    placeholder="Tell us about your mentoring philosophy and experience (min 50 characters)"
                                     value={formData.bio}
                                     onChange={(e) => handleInputChange("bio", e.target.value)}
                                     rows={4}
@@ -299,39 +293,64 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
                     {currentStep === 3 && (
                         <div className="space-y-6">
                             <div>
-                                <label className="block text-gray-700 text-sm font-medium mb-2">Field of Work</label>
+                                <label className="block text-gray-700 text-sm font-medium mb-2">Field of Expertise</label>
                                 <select
-                                    value={formData.fieldOfWork}
-                                    onChange={(e) => handleInputChange("fieldOfWork", e.target.value)}
-                                    className={`w-full px-4 py-3 rounded-lg border ${errors.fieldOfWork ? "border-red-300" : "border-gray-200"
+                                    value={formData.fieldOfExpertise}
+                                    onChange={(e) => handleInputChange("fieldOfExpertise", e.target.value)}
+                                    className={`w-full px-4 py-3 rounded-lg border ${errors.fieldOfExpertise ? "border-red-300" : "border-gray-200"
                                         } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                                 >
-                                    <option value="">Select your field</option>
+                                    <option value="">Select your field of expertise</option>
                                     {fieldOptions.map((field) => (
                                         <option key={field} value={field}>
                                             {field}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.fieldOfWork && <p className="text-red-500 text-sm mt-1">{errors.fieldOfWork}</p>}
+                                {errors.fieldOfExpertise && <p className="text-red-500 text-sm mt-1">{errors.fieldOfExpertise}</p>}
                             </div>
 
                             <div>
-                                <label className="block text-gray-700 text-sm font-medium mb-2">Experience Level</label>
+                                <label className="block text-gray-700 text-sm font-medium mb-2">Years of Experience</label>
                                 <select
-                                    value={formData.experienceLevel}
-                                    onChange={(e) => handleInputChange("experienceLevel", e.target.value)}
-                                    className={`w-full px-4 py-3 rounded-lg border ${errors.experienceLevel ? "border-red-300" : "border-gray-200"
+                                    value={formData.yearsOfExperience}
+                                    onChange={(e) => handleInputChange("yearsOfExperience", e.target.value)}
+                                    className={`w-full px-4 py-3 rounded-lg border ${errors.yearsOfExperience ? "border-red-300" : "border-gray-200"
                                         } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
                                 >
-                                    <option value="">Select your level</option>
-                                    {experienceLevels.map((level) => (
+                                    <option value="">Select your years of experience</option>
+                                    {experienceYearsOptions.map((level) => (
                                         <option key={level} value={level}>
                                             {level}
                                         </option>
                                     ))}
                                 </select>
-                                {errors.experienceLevel && <p className="text-red-500 text-sm mt-1">{errors.experienceLevel}</p>}
+                                {errors.yearsOfExperience && <p className="text-red-500 text-sm mt-1">{errors.yearsOfExperience}</p>}
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 text-sm font-medium mb-2">Mentoring Topics</label>
+                                <input
+                                    type="text"
+                                    placeholder="Comma-separated: e.g., React, Node.js, Career Coaching"
+                                    value={formData.mentoringTopics}
+                                    onChange={(e) => handleInputChange("mentoringTopics", e.target.value)}
+                                    className={`w-full px-4 py-3 rounded-lg border ${errors.mentoringTopics ? "border-red-300" : "border-gray-200"
+                                        } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
+                                />
+                                {errors.mentoringTopics && <p className="text-red-500 text-sm mt-1">{errors.mentoringTopics}</p>}
+                            </div>
+                            <div>
+                                <label className="block text-gray-700 text-sm font-medium mb-2">LinkedIn Profile URL</label>
+                                <input
+                                    type="url"
+                                    placeholder="e.g., https://linkedin.com/in/yourprofile"
+                                    value={formData.linkedinProfile}
+                                    onChange={(e) => handleInputChange("linkedinProfile", e.target.value)}
+                                    className={`w-full px-4 py-3 rounded-lg border ${errors.linkedinProfile ? "border-red-300" : "border-gray-200"
+                                        } focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent`}
+                                />
+                                {errors.linkedinProfile && <p className="text-red-500 text-sm mt-1">{errors.linkedinProfile}</p>}
                             </div>
                         </div>
                     )}
@@ -350,7 +369,7 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
                             onClick={handleContinue}
                             className="bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-lg font-medium flex items-center space-x-2 transition-colors"
                         >
-                            <span>{currentStep === 3 ? "Complete" : "Continue"}</span>
+                            <span>{currentStep === 3 ? "Complete Registration" : "Continue"}</span>
                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
@@ -372,4 +391,4 @@ const RegistrationForm = ({ onRegistrationComplete, onSwitchToLogin, role = "men
     )
 }
 
-export default RegistrationForm
+export default MentorRegistrationForm

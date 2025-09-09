@@ -1,4 +1,4 @@
-- [x] Modify RegistrationForm.jsx to accept `role` prop and change title to "Join as a Mentor" if role is "mentor"
-- [x] Update App.jsx RegisterRoute to extract role from query params and pass to RegistrationForm
-- [x] Update Header.jsx to link "Sign Up" to /register?role=mentee or /register?role=mentor based on currentRole
-- [x] Test the changes (run npm run dev and verify navigation)
+- [x] Update checkExamStatus in App.jsx to check all career paths
+- [x] Update saveResults in ExM.jsx to use userProfile.fieldOfWork as careerTitle
+- [ ] Test login redirect to dashboard for users with completed exams
+- [ ] Verify career title matches user's selected field in dashboard

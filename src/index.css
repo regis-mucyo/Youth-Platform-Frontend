@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+* {
+  font-family: "Poppins", sans-serif;
+}
+
 /* Global color remap: make all green shades use blue values */
 @theme {
   --color-green-50: var(--color-blue-50);
@@ -14,3 +18,4 @@
   --color-green-900: var(--color-blue-900);
   --color-green-950: var(--color-blue-950);
 }
+
