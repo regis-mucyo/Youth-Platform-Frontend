@@ -11,10 +11,181 @@ import {
   Briefcase,
   User,
   Zap,
+  Copy,
+  ChevronDown,
 } from "lucide-react";
-import { mockConnections, mockOpportunities } from "../data/mockData";
 
-// Custom Toast Component
+// Updated mock data with new fields
+const mockConnections = {
+  mentees: [
+    {
+      id: 1,
+      name: "Tshepo Modise",
+      avatar: "TM",
+      field: "Software Development",
+      company: "Innovate Solutions",
+      level: "Intermediate",
+      totalSessions: 12,
+      bio: "Tshepo is a passionate and detail-oriented full-stack developer with a strong foundation in modern web technologies. He has a proven track record of building responsive and scalable applications.",
+      skills: ["React", "Node.js", "Express", "MongoDB", "JavaScript"],
+      experience: [
+        {
+          title: "Junior Software Engineer",
+          company: "Innovate Solutions",
+          years: "2023 - Present",
+        },
+      ],
+      education: [
+        {
+          degree: "BSc Computer Science",
+          university: "University of Cape Town",
+          graduationYear: "2022",
+        },
+      ],
+      portfolioLink: "https://github.com/tshepodev",
+      linkedinLink: "https://linkedin.com/in/tshepo-modise",
+      location: "Cape Town, South Africa",
+      availability: "Immediately",
+      preferredRole: "Full-Stack Developer",
+      languages: ["English", "Zulu"],
+    },
+    {
+      id: 2,
+      name: "Ayisha Suleiman",
+      avatar: "AS",
+      field: "UX/UI Design",
+      company: "Creative Hub",
+      level: "Entry-level",
+      totalSessions: 8,
+      bio: "Ayisha is a creative UX/UI designer with a keen eye for user-centric design and a passion for crafting intuitive and beautiful digital experiences.",
+      skills: ["Figma", "Sketch", "Adobe XD", "User Research", "Wireframing"],
+      experience: [
+        {
+          title: "Product Design Intern",
+          company: "Creative Hub",
+          years: "2024 - Present",
+        },
+      ],
+      education: [
+        {
+          degree: "Diploma in Graphic Design",
+          university: "Lagos School of Arts",
+          graduationYear: "2024",
+        },
+      ],
+      portfolioLink: "https://behance.net/ayishasuleiman",
+      linkedinLink: "https://linkedin.com/in/ayisha-suleiman",
+      location: "Lagos, Nigeria",
+      availability: "Two weeks' notice",
+      preferredRole: "Junior UX/UI Designer",
+      languages: ["English", "Yoruba"],
+    },
+    {
+      id: 3,
+      name: "Kwame Osei",
+      avatar: "KO",
+      field: "Data Science",
+      company: "DataMinds Inc.",
+      level: "Advanced",
+      totalSessions: 20,
+      bio: "Kwame is an experienced data scientist with expertise in machine learning and data visualization. He enjoys turning complex data into actionable insights.",
+      skills: ["Python", "SQL", "Machine Learning", "Tableau", "R"],
+      experience: [
+        {
+          title: "Data Scientist",
+          company: "DataMinds Inc.",
+          years: "2021 - Present",
+        },
+        {
+          title: "Data Analyst",
+          company: "Global Metrics",
+          years: "2019 - 2021",
+        },
+      ],
+      education: [
+        {
+          degree: "MSc Data Science",
+          university: "Accra Tech University",
+          graduationYear: "2019",
+        },
+      ],
+      portfolioLink: "https://github.com/kwame-data",
+      linkedinLink: "https://linkedin.com/in/kwame-osei",
+      location: "Accra, Ghana",
+      availability: "Open to new roles",
+      preferredRole: "Senior Data Scientist",
+      languages: ["English", "Akan"],
+    },
+  ],
+};
+
+const mockOpportunities = [
+  {
+    id: 1,
+    title: "Full-Stack Developer",
+    company: "Tech Solutions Inc.",
+    type: "Job",
+    location: "Remote",
+    level: "Intermediate",
+    description:
+      "Join our dynamic team to build and maintain web applications. We're looking for someone with strong skills in React and Node.js.",
+    skills: ["React", "Node.js", "MongoDB", "Express"],
+    salary: "$60,000 - $80,000",
+    duration: "Full-time",
+    applicants: 15,
+    deadline: "2025-10-30",
+    postedDate: "2025-09-01",
+  },
+  {
+    id: 2,
+    title: "UX/UI Design Intern",
+    company: "Design Studio",
+    type: "Internship",
+    location: "Nairobi, Kenya",
+    level: "Entry-level",
+    description:
+      "A hands-on internship for aspiring designers. You will work on real projects, creating user flows, wireframes, and prototypes.",
+    skills: ["Figma", "Adobe XD", "User Research", "Prototyping"],
+    salary: "Stipend",
+    duration: "3 months",
+    applicants: 25,
+    deadline: "2025-10-15",
+    postedDate: "2025-09-05",
+  },
+  {
+    id: 3,
+    title: "Data Science Bootcamp",
+    company: "Future Coders Academy",
+    type: "Bootcamp",
+    location: "Online",
+    level: "All Levels",
+    description:
+      "A comprehensive 6-month program covering Python, data analysis, machine learning, and more. No prior experience needed.",
+    skills: ["Python", "Pandas", "NumPy", "Scikit-learn"],
+    salary: "N/A",
+    duration: "6 months",
+    applicants: 40,
+    deadline: "2025-09-20",
+    postedDate: "2025-08-28",
+  },
+  {
+    id: 4,
+    title: "Software Developer",
+    company: "FinTech Solutions",
+    type: "Job",
+    location: "Remote",
+    level: "Mid-level",
+    description:
+      "Looking for an experienced software developer to join our team, focusing on backend systems and API development.",
+    skills: ["Python", "Django", "SQL", "AWS"],
+    salary: "$75,000 - $95,000",
+    duration: "Full-time",
+    applicants: 10,
+    deadline: "2025-11-01",
+    postedDate: "2025-09-08",
+  },
+];
+
 const Toast = ({ message, type, onClose }) => {
   const bgColor =
     type === "success"
@@ -27,7 +198,7 @@ const Toast = ({ message, type, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 3000); // Auto-close after 3 seconds
+    }, 3000);
     return () => clearTimeout(timer);
   }, [onClose]);
 
@@ -37,6 +208,615 @@ const Toast = ({ message, type, onClose }) => {
     >
       <div className="mr-2">{icon}</div>
       <span>{message}</span>
+    </div>
+  );
+};
+
+const ShareOpportunityModal = ({ onClose, onSubmit }) => {
+  const [formData, setFormData] = useState({
+    title: "",
+    company: "",
+    type: "Job",
+    location: "",
+    level: "",
+    description: "",
+    skills: "",
+    salary: "",
+    duration: "",
+    applicants: 0,
+    deadline: "",
+    postedDate: new Date().toLocaleDateString(),
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSkillsChange = (e) => {
+    const value = e.target.value;
+    const skillsArray = value
+      .split(",")
+      .map((skill) => skill.trim())
+      .filter((skill) => skill !== "");
+    setFormData((prev) => ({ ...prev, skills: skillsArray.join(", ") }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(formData);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[80vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-lg font-semibold">Share a New Opportunity</h3>
+          <button onClick={onClose}>
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Title*
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Company*
+              </label>
+              <input
+                type="text"
+                name="company"
+                value={formData.company}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Type*
+              </label>
+              <select
+                name="type"
+                value={formData.type}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              >
+                <option>Job</option>
+                <option>Internship</option>
+                <option>Bootcamp</option>
+                <option>Webinar</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Location*
+              </label>
+              <input
+                type="text"
+                name="location"
+                value={formData.location}
+                onChange={handleChange}
+                required
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Level
+              </label>
+              <input
+                type="text"
+                name="level"
+                value={formData.level}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Salary
+              </label>
+              <input
+                type="text"
+                name="salary"
+                value={formData.salary}
+                onChange={handleChange}
+                placeholder="e.g., $50,000 - $70,000"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Duration
+              </label>
+              <input
+                type="text"
+                name="duration"
+                value={formData.duration}
+                onChange={handleChange}
+                placeholder="e.g., Full-time, 6 months"
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-700">
+                Application Deadline
+              </label>
+              <input
+                type="date"
+                name="deadline"
+                value={formData.deadline}
+                onChange={handleChange}
+                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+              />
+            </div>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Required Skills (comma-separated)*
+            </label>
+            <input
+              type="text"
+              name="skills"
+              value={formData.skills}
+              onChange={handleSkillsChange}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Description*
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              rows={4}
+              required
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg resize-none"
+            />
+          </div>
+          <div className="flex justify-end space-x-3 mt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Share Opportunity
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+// New Edit Profile Modal Component with improved layout and new fields
+const EditProfileModal = ({ mentee, onClose, onShare }) => {
+  const [editedMentee, setEditedMentee] = useState(mentee);
+  const [isSectionOpen, setIsSectionOpen] = useState({
+    bio: true,
+    skills: false,
+    experience: true,
+    education: true,
+    links: true,
+    jobDetails: true,
+  });
+
+  const toggleSection = (section) => {
+    setIsSectionOpen((prev) => ({
+      ...prev,
+      [section]: !prev[section],
+    }));
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setEditedMentee((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSkillsChange = (e) => {
+    const value = e.target.value;
+    const skillsArray = value
+      .split(",")
+      .map((skill) => skill.trim())
+      .filter((skill) => skill !== "");
+    setEditedMentee((prev) => ({ ...prev, skills: skillsArray }));
+  };
+
+  const handleLanguagesChange = (e) => {
+    const value = e.target.value;
+    const languagesArray = value
+      .split(",")
+      .map((language) => language.trim())
+      .filter((language) => language !== "");
+    setEditedMentee((prev) => ({ ...prev, languages: languagesArray }));
+  };
+
+  const handleExperienceChange = (index, e) => {
+    const { name, value } = e.target;
+    const newExperience = [...editedMentee.experience];
+    newExperience[index][name] = value;
+    setEditedMentee((prev) => ({ ...prev, experience: newExperience }));
+  };
+
+  const handleAddExperience = () => {
+    setEditedMentee((prev) => ({
+      ...prev,
+      experience: [...prev.experience, { company: "", title: "", years: "" }],
+    }));
+  };
+
+  const handleEducationChange = (index, e) => {
+    const { name, value } = e.target;
+    const newEducation = [...editedMentee.education];
+    newEducation[index][name] = value;
+    setEditedMentee((prev) => ({ ...prev, education: newEducation }));
+  };
+
+  const handleAddEducation = () => {
+    setEditedMentee((prev) => ({
+      ...prev,
+      education: [
+        ...prev.education,
+        { university: "", degree: "", graduationYear: "" },
+      ],
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onShare(editedMentee);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+        <div className="flex justify-between items-center mb-4">
+          <h3 className="text-xl font-bold">Edit & Share Profile</h3>
+          <button
+            onClick={onClose}
+            className="p-1 rounded-full hover:bg-gray-100"
+          >
+            <X className="w-5 h-5 text-gray-600" />
+          </button>
+        </div>
+        <div className="border-b border-gray-200 pb-4 mb-4">
+          <h4 className="text-lg font-semibold">{mentee.name}</h4>
+          <p className="text-sm text-gray-500">{mentee.field}</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Bio Section */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection("bio")}
+            >
+              <h4 className="font-semibold text-gray-800">Bio & Summary</h4>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  isSectionOpen.bio ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {isSectionOpen.bio && (
+              <div className="mt-4">
+                <label className="block text-sm font-medium text-gray-700">
+                  Write a brief summary to highlight their strengths
+                </label>
+                <textarea
+                  name="bio"
+                  value={editedMentee.bio || ""}
+                  onChange={handleChange}
+                  rows={4}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg resize-none"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Skills & Languages Section */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection("skills")}
+            >
+              <h4 className="font-semibold text-gray-800">
+                Skills & Languages
+              </h4>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  isSectionOpen.skills ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {isSectionOpen.skills && (
+              <div className="mt-4 space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Technical Skills (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    name="skills"
+                    value={editedMentee.skills?.join(", ") || ""}
+                    onChange={handleSkillsChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    placeholder="e.g., React, Python, Figma"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Languages (comma-separated)
+                  </label>
+                  <input
+                    type="text"
+                    name="languages"
+                    value={editedMentee.languages?.join(", ") || ""}
+                    onChange={handleLanguagesChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    placeholder="e.g., English, French, Swahili"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Job & Availability Details Section */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection("jobDetails")}
+            >
+              <h4 className="font-semibold text-gray-800">Job Preferences</h4>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  isSectionOpen.jobDetails ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {isSectionOpen.jobDetails && (
+              <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Preferred Role
+                  </label>
+                  <input
+                    type="text"
+                    name="preferredRole"
+                    value={editedMentee.preferredRole || ""}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    placeholder="e.g., Senior Data Scientist"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Location Preference
+                  </label>
+                  <input
+                    type="text"
+                    name="location"
+                    value={editedMentee.location || ""}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    placeholder="e.g., Remote, On-site, Hybrid"
+                  />
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    Availability
+                  </label>
+                  <input
+                    type="text"
+                    name="availability"
+                    value={editedMentee.availability || ""}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                    placeholder="e.g., Immediately, 2 weeks' notice"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Work Experience Section */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection("experience")}
+            >
+              <h4 className="font-semibold text-gray-800">Work Experience</h4>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  isSectionOpen.experience ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {isSectionOpen.experience && (
+              <div className="mt-4 space-y-2">
+                {editedMentee.experience.map((exp, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2"
+                  >
+                    <input
+                      type="text"
+                      name="title"
+                      value={exp.title}
+                      onChange={(e) => handleExperienceChange(index, e)}
+                      placeholder="Job Title"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                    <input
+                      type="text"
+                      name="company"
+                      value={exp.company}
+                      onChange={(e) => handleExperienceChange(index, e)}
+                      placeholder="Company"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                    <input
+                      type="text"
+                      name="years"
+                      value={exp.years}
+                      onChange={(e) => handleExperienceChange(index, e)}
+                      placeholder="Years"
+                      className="w-full md:w-24 px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleAddExperience}
+                  className="mt-2 text-sm text-blue-500 hover:text-blue-600 font-medium"
+                >
+                  + Add Experience
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Education Section */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection("education")}
+            >
+              <h4 className="font-semibold text-gray-800">Education</h4>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  isSectionOpen.education ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {isSectionOpen.education && (
+              <div className="mt-4 space-y-2">
+                {editedMentee.education.map((edu, index) => (
+                  <div
+                    key={index}
+                    className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2"
+                  >
+                    <input
+                      type="text"
+                      name="degree"
+                      value={edu.degree}
+                      onChange={(e) => handleEducationChange(index, e)}
+                      placeholder="Degree"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                    <input
+                      type="text"
+                      name="university"
+                      value={edu.university}
+                      onChange={(e) => handleEducationChange(index, e)}
+                      placeholder="University"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                    <input
+                      type="text"
+                      name="graduationYear"
+                      value={edu.graduationYear}
+                      onChange={(e) => handleEducationChange(index, e)}
+                      placeholder="Year"
+                      className="w-full md:w-24 px-3 py-2 border border-gray-300 rounded-lg"
+                    />
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={handleAddEducation}
+                  className="mt-2 text-sm text-blue-500 hover:text-blue-600 font-medium"
+                >
+                  + Add Education
+                </button>
+              </div>
+            )}
+          </div>
+
+          {/* Links Section */}
+          <div className="bg-gray-50 rounded-lg p-4">
+            <div
+              className="flex justify-between items-center cursor-pointer"
+              onClick={() => toggleSection("links")}
+            >
+              <h4 className="font-semibold text-gray-800">Links</h4>
+              <ChevronDown
+                className={`w-5 h-5 transition-transform ${
+                  isSectionOpen.links ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+            {isSectionOpen.links && (
+              <div className="mt-4 space-y-2">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    Portfolio / GitHub Link
+                  </label>
+                  <input
+                    type="text"
+                    name="portfolioLink"
+                    value={editedMentee.portfolioLink || ""}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">
+                    LinkedIn Profile Link
+                  </label>
+                  <input
+                    type="text"
+                    name="linkedinLink"
+                    value={editedMentee.linkedinLink || ""}
+                    onChange={handleChange}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-lg"
+                  />
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="flex justify-end space-x-3 mt-6">
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="px-4 py-2 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition-colors flex items-center"
+            >
+              <Copy size={16} className="mr-2" />
+              Create Shareable Link
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
@@ -60,6 +840,9 @@ const MarketLinkagePage = () => {
     portfolio: "",
   });
   const [toast, setToast] = useState(null);
+  const [showNewShareModal, setShowNewShareModal] = useState(false);
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [selectedMentee, setSelectedMentee] = useState(null);
 
   useEffect(() => {
     setOpportunities(mockOpportunities);
@@ -71,19 +854,14 @@ const MarketLinkagePage = () => {
       (opp) =>
         opp.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         opp.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        opp.skills.some((skill) =>
-          skill.toLowerCase().includes(searchTerm.toLowerCase())
-        )
+        (opp.skills &&
+          opp.skills.some((skill) =>
+            skill.toLowerCase().includes(searchTerm.toLowerCase())
+          ))
     );
 
     if (activeFilter !== "All") {
-      filtered = filtered.filter((opp) => {
-        if (activeFilter === "Jobs") return opp.type === "Job";
-        if (activeFilter === "Internships") return opp.type === "Internship";
-        if (activeFilter === "Bootcamps") return opp.type === "Bootcamp";
-        if (activeFilter === "Webinars") return opp.type === "Webinar";
-        return opp.type === activeFilter;
-      });
+      filtered = filtered.filter((opp) => opp.type === activeFilter);
     }
 
     setFilteredOpportunities(filtered);
@@ -102,7 +880,6 @@ const MarketLinkagePage = () => {
   const handleRecommendTalent = (opportunityId) => {
     const opportunity = opportunities.find((opp) => opp.id === opportunityId);
     setSelectedOpportunity(opportunity);
-    // Use the same selected mentees from the share modal
     setShowRecommendModal(true);
   };
 
@@ -156,19 +933,58 @@ const MarketLinkagePage = () => {
     );
   };
 
+  const handleShareOpportunityClick = () => {
+    setShowNewShareModal(true);
+  };
+
+  const handleShareOpportunitySubmit = (newOpportunity) => {
+    const skillsArray = newOpportunity.skills
+      .split(",")
+      .map((skill) => skill.trim());
+
+    const newOpp = {
+      ...newOpportunity,
+      id: opportunities.length + 1,
+      skills: skillsArray,
+      applicants: 0,
+      postedDate: new Date().toLocaleDateString(),
+    };
+
+    setOpportunities((prevOpportunities) => [newOpp, ...prevOpportunities]);
+    showToast("Opportunity shared successfully!", "success");
+    setShowNewShareModal(false);
+  };
+
+  const handleCreateShareableProfile = (menteeId) => {
+    const mentee = mockConnections.mentees.find((m) => m.id === menteeId);
+    if (mentee) {
+      setSelectedMentee(mentee);
+      setShowEditProfileModal(true);
+    }
+  };
+
+  const handleFinalShareProfile = (editedMentee) => {
+    console.log("Saving changes and generating link for:", editedMentee);
+    const generatedLink = `https://your-app.com/talent-profile/${editedMentee.id}/shareable`;
+    navigator.clipboard.writeText(generatedLink);
+    showToast("Shareable profile link copied to clipboard!", "success");
+    setShowEditProfileModal(false);
+  };
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Market Linkage
         </h1>
-        <p className="text-gray-600">Discover opportunities for your mentees</p>
+        <p className="text-gray-600">
+          Discover and share opportunities for your mentees
+        </p>
       </div>
 
-      {/* Top Talent Section */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">Top Talent</h2>
+          <h2 className="text-lg font-semibold text-gray-900">My Top Talent</h2>
           <div className="relative">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -184,7 +1000,6 @@ const MarketLinkagePage = () => {
           </div>
         </div>
 
-        {/* Talent Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
           {mockConnections.mentees
             .filter(
@@ -222,7 +1037,7 @@ const MarketLinkagePage = () => {
                   {mentee.level} level • {mentee.totalSessions} sessions
                   completed
                 </p>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-4">
                   {mentee.skills.slice(0, 3).map((skill) => (
                     <span
                       key={skill}
@@ -232,11 +1047,19 @@ const MarketLinkagePage = () => {
                     </span>
                   ))}
                 </div>
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => handleCreateShareableProfile(mentee.id)}
+                    className="px-4 py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm font-medium transition-colors flex items-center"
+                  >
+                    <Copy size={16} className="mr-2" />
+                    Create Shareable Profile
+                  </button>
+                </div>
               </div>
             ))}
         </div>
 
-        {/* Opportunity Tags */}
         <div className="flex items-center justify-between">
           <div className="flex space-x-3">
             <span className="px-3 py-1 bg-red-100 text-red-700 text-sm rounded-full flex items-center">
@@ -266,39 +1089,37 @@ const MarketLinkagePage = () => {
               Webinar
             </span>
           </div>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center">
-            <Share2 size={16} className="mr-2" />
+          <button
+            onClick={handleShareOpportunityClick}
+            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center"
+          >
+            <Briefcase size={16} className="mr-2" />
             Share Opportunity
           </button>
         </div>
       </div>
 
-      {/* Job Opportunities Section */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Available Opportunities
         </h2>
 
-        {/* Filter Tabs */}
         <div className="flex space-x-6 mb-6 border-b border-gray-200">
-          {["All", "Jobs", "Internships", "Bootcamps", "Webinars"].map(
-            (filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`pb-2 px-1 border-b-2 font-medium text-sm ${
-                  activeFilter === filter
-                    ? "border-blue-500 text-blue-600"
-                    : "border-transparent text-gray-500 hover:text-gray-700"
-                }`}
-              >
-                {filter}
-              </button>
-            )
-          )}
+          {["All", "Job", "Internship", "Bootcamp", "Webinar"].map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`pb-2 px-1 border-b-2 font-medium text-sm ${
+                activeFilter === filter
+                  ? "border-blue-500 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700"
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
         </div>
 
-        {/* Search Bar for Opportunities */}
         <div className="relative mb-6">
           <Search
             className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -313,7 +1134,6 @@ const MarketLinkagePage = () => {
           />
         </div>
 
-        {/* Opportunities List */}
         {filteredOpportunities.length > 0 ? (
           <div className="space-y-4">
             {filteredOpportunities.map((opportunity) => (
@@ -381,7 +1201,7 @@ const MarketLinkagePage = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-2">
-                      {opportunity.skills.map((skill) => (
+                      {opportunity.skills?.map((skill) => (
                         <span
                           key={skill}
                           className="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded"
@@ -442,7 +1262,13 @@ const MarketLinkagePage = () => {
         )}
       </div>
 
-      {/* Share Opportunity Modal */}
+      {showNewShareModal && (
+        <ShareOpportunityModal
+          onClose={() => setShowNewShareModal(false)}
+          onSubmit={handleShareOpportunitySubmit}
+        />
+      )}
+
       {showShareModal && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
@@ -487,7 +1313,14 @@ const MarketLinkagePage = () => {
         </div>
       )}
 
-      {/* Opportunity Details Modal */}
+      {showEditProfileModal && selectedMentee && (
+        <EditProfileModal
+          mentee={selectedMentee}
+          onClose={() => setShowEditProfileModal(false)}
+          onShare={handleFinalShareProfile}
+        />
+      )}
+
       {showDetailsModal && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-96 overflow-y-auto">
@@ -562,7 +1395,6 @@ const MarketLinkagePage = () => {
         </div>
       )}
 
-      {/* Recommend Talent Modal */}
       {showRecommendModal && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-smbg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-md">
@@ -585,19 +1417,16 @@ const MarketLinkagePage = () => {
                   return (
                     <div
                       key={mentee.id}
-                      className="flex items-center space-x-2 p-1 rounded-md bg-green-100" // Reduced padding and removed ring
+                      className="flex items-center space-x-2 p-1 rounded-md bg-green-100"
                     >
-                      <User className="w-6 h-6 text-gray-500 bg-gray-200 rounded-full p-0.5" />{" "}
-                      {/* Smaller icon */}
+                      <User className="w-6 h-6 text-gray-500 bg-gray-200 rounded-full p-0.5" />
                       <div className="flex-1">
                         <h4 className="font-medium text-sm text-gray-900">
                           {mentee.name}
-                        </h4>{" "}
-                        {/* Smaller text */}
+                        </h4>
                         <p className="text-xs text-gray-500">{mentee.field}</p>
                       </div>
-                      <CheckCircle className="text-green-500 w-4 h-4" />{" "}
-                      {/* Smaller check icon */}
+                      <CheckCircle className="text-green-500 w-4 h-4" />
                     </div>
                   );
                 })
@@ -641,7 +1470,6 @@ const MarketLinkagePage = () => {
         </div>
       )}
 
-      {/* Application Modal */}
       {showApplicationModal && (
         <div className="fixed inset-0 bg-black/20 backdrop-blur-sm bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-lg max-h-96 overflow-y-auto">
