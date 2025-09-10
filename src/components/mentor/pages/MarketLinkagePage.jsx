@@ -168,7 +168,7 @@ const MarketLinkagePage = () => {
       {/* Top Talent Section */}
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">Top Talent</h2>
+          <h2 className="text-lg font-semibold text-gray-900">My Top Talent</h2>
           <div className="relative">
             <Search
               className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
