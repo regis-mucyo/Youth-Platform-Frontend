@@ -238,11 +238,9 @@ const ConnectionPage = ({ activeConnectionTab, setActiveConnectionTab }) => {
   const [recommendedMentors, setRecommendedMentors] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredConnections, setFilteredConnections] = useState([]);
-  const [showScheduleModal, setShowScheduleModal] = useState(false);
-  const [selectedMenteeSessions, setSelectedMenteeSessions] = useState([]);
-  const [selectedMenteeName, setSelectedMenteeName] = useState("");
   const [toast, setToast] = useState({ message: "", visible: false });
   const [connectStatus, setConnectStatus] = useState({});
+  const [addTalentStatus, setAddTalentStatus] = useState({});
 
   useEffect(() => {
     // Map the mock data to include hasUpcomingSession for mentees
@@ -311,21 +309,20 @@ const ConnectionPage = ({ activeConnectionTab, setActiveConnectionTab }) => {
     showToast("Opening chat...");
   };
 
-  const handleSchedule = (menteeName) => {
-    const menteeSessions = mockSessions.filter(
-      (session) => session.mentee === menteeName
-    );
-    setSelectedMenteeSessions(menteeSessions);
-    setSelectedMenteeName(menteeName);
-    setShowScheduleModal(true);
-  };
+  const handleAddTopTalent = (menteeId) => {
+    setAddTalentStatus((prevStatus) => ({
+      ...prevStatus,
+      [menteeId]: "loading",
+    }));
 
-  const handleScheduleNewMeeting = () => {
-    showToast("Opening calendar to schedule a new meeting...");
-    // Placeholder for actual scheduling logic
-    console.log(
-      "Navigating to scheduling page or opening a new scheduling modal."
-    );
+    // Simulate an API call
+    setTimeout(() => {
+      setAddTalentStatus((prevStatus) => ({
+        ...prevStatus,
+        [menteeId]: "added",
+      }));
+      showToast("Successfully added to Top Talent!");
+    }, 2000);
   };
 
   const connectionTabs = [
@@ -552,17 +549,29 @@ const ConnectionPage = ({ activeConnectionTab, setActiveConnectionTab }) => {
 
                 <div className="flex justify-end mt-auto pt-3 border-t border-gray-100">
                   <button
-                    onClick={() => handleSchedule(mentee.name)}
-                    className="relative px-4 py-2 bg-blue-600 text-white text-xs rounded-lg hover:bg-blue-700 transition-colors shadow-sm font-semibold flex items-center"
+                    onClick={() => handleAddTopTalent(mentee.id)}
+                    disabled={
+                      addTalentStatus[mentee.id] === "loading" ||
+                      addTalentStatus[mentee.id] === "added"
+                    }
+                    className={`relative px-4 py-2 text-white text-xs rounded-lg hover:bg-blue-700 transition-colors shadow-sm font-semibold flex items-center
+                      ${
+                        addTalentStatus[mentee.id] === "added"
+                          ? "bg-gray-500 cursor-not-allowed"
+                          : "bg-blue-600 hover:bg-blue-700"
+                      }
+                      ${
+                        addTalentStatus[mentee.id] === "loading" &&
+                        "bg-blue-400 cursor-wait"
+                      }
+                    `}
                   >
-                    Schedule
-                    {mentee.hasUpcomingSession && (
-                      <>
-                        {/* Ping animation effect */}
-                        <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-400 opacity-75 animate-ping"></span>
-                        {/* Solid notification badge */}
-                        <span className="absolute top-0 right-0 h-2 w-2 rounded-full bg-red-500"></span>
-                      </>
+                    {addTalentStatus[mentee.id] === "loading" ? (
+                      "Adding..."
+                    ) : addTalentStatus[mentee.id] === "added" ? (
+                      "Added to Top Talent"
+                    ) : (
+                      <>+ Add To My Top Talent</>
                     )}
                   </button>
                 </div>
@@ -621,113 +630,6 @@ const ConnectionPage = ({ activeConnectionTab, setActiveConnectionTab }) => {
         {/* Content Area */}
         <div className="mt-4">{renderTabContent()}</div>
       </div>
-
-      {/* Schedule Modal */}
-      {showScheduleModal && (
-        <div className="fixed inset-0 z-50 overflow-y-auto bg-gray-600/50 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="relative bg-white rounded-xl p-6 max-w-lg w-full mx-auto shadow-2xl">
-            <div className="flex items-center justify-between mb-4 border-b border-gray-200 pb-3">
-              <h2 className="text-xl font-bold text-gray-900">
-                Sessions with {selectedMenteeName}
-              </h2>
-              <button
-                onClick={() => setShowScheduleModal(false)}
-                className="text-gray-400 hover:text-gray-600 transition-colors"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            {selectedMenteeSessions.length > 0 ? (
-              <div className="space-y-3 max-h-96 overflow-y-auto">
-                {selectedMenteeSessions.map((session) => (
-                  <div
-                    key={session.id}
-                    className={`border rounded-lg p-3 transition-all duration-300 ${
-                      session.status === "upcoming"
-                        ? "bg-blue-50 border-blue-200 shadow-sm"
-                        : "bg-gray-50 border-gray-200"
-                    }`}
-                  >
-                    <div className="flex items-start space-x-3">
-                      <div
-                        className={`p-1.5 rounded-full ${
-                          session.status === "upcoming"
-                            ? "bg-blue-100"
-                            : "bg-gray-200"
-                        }`}
-                      >
-                        <Calendar
-                          className={`w-4 h-4 ${
-                            session.status === "upcoming"
-                              ? "text-blue-600"
-                              : "text-gray-500"
-                          }`}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-gray-900 text-sm">
-                          {session.topic}
-                        </h3>
-                        <p className="text-xs text-gray-600">
-                          {session.date} at {session.time} • {session.duration}
-                          min
-                        </p>
-                        <p
-                          className={`text-xs font-medium mt-1 ${
-                            session.status === "upcoming"
-                              ? "text-blue-500"
-                              : session.status === "completed"
-                              ? "text-green-500"
-                              : "text-yellow-500"
-                          }`}
-                        >
-                          Status:{" "}
-                          {session.status.charAt(0).toUpperCase() +
-                            session.status.slice(1)}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-6">
-                <Calendar className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-                <p className="text-sm text-gray-500 font-medium">
-                  No sessions recorded with this mentee yet.
-                </p>
-              </div>
-            )}
-            <div className="mt-6 flex justify-between items-center">
-              <button
-                className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold shadow-sm"
-                onClick={handleScheduleNewMeeting}
-              >
-                Schedule another meeting
-              </button>
-              <button
-                className="px-5 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors text-sm font-semibold shadow-sm"
-                onClick={() => setShowScheduleModal(false)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Toast Notification */}
       {toast.visible && (
