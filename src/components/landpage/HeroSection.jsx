@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+
+// Import your images
 import mentees2 from "../../assets/images/mentees2.jpg";
 import image1 from "../../assets/images/image1.jpg";
 import image2 from "../../assets/images/image2.jpg";
@@ -7,72 +9,86 @@ import image3 from "../../assets/images/image3.jpg";
 import image4 from "../../assets/images/image4.png";
 import image5 from "../../assets/images/image5.png";
 
-// The array of all images to cycle through
 const images = [mentees2, image1, image2, image3, image4, image5];
 
 const HeroSection = ({ role = "mentee" }) => {
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
-  // Use useEffect to change the background image every few seconds
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 1000); // Change image every 5 seconds
+      if (isAnimating) return; // Prevent animation stacking
 
-    return () => clearInterval(interval); // Clean up the interval on component unmount
-  }, []);
+      setIsAnimating(true);
 
-  const heroStyle = {
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    transition: "background-image 1s ease-in-out", // Smooth transition
-    backgroundImage: `url(${images[currentImageIndex]})`,
-  };
+      // Match this timeout with animation duration (1.2s)
+      setTimeout(() => {
+        setCurrentImageIndex((prev) => (prev + 1) % images.length);
+        setIsAnimating(false);
+      }, 1200);
+    }, 3000); // Change every 6s → gives 1.2s animation + 4.8s pause
+
+    return () => clearInterval(interval);
+  }, [isAnimating]);
+
+  const nextImageIndex = (currentImageIndex + 1) % images.length;
 
   return (
-    <section
-      style={heroStyle}
-      className="relative py-16 md:py-24 overflow-hidden"
-    >
-      {/* Semi-transparent black overlay for text readability */}
-      <div className="absolute inset-0 bg-black opacity-50 z-0"></div>
+    <div className="relative w-full h-screen overflow-hidden">
+      {/* Current Image — Slides OUT to the left with slow ease */}
+      <div className="absolute inset-0">
+        <img
+          src={images[currentImageIndex]}
+          alt="Current background"
+          className={`w-full h-full object-cover ${
+            isAnimating ? "slide-out" : ""
+          }`}
+        />
+      </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-        {/* Dynamic Headline */}
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
+      {/* Next Image — Slides IN from the right (only rendered during transition) */}
+      {isAnimating && (
+        <div className="absolute inset-0 z-0">
+          <img
+            src={images[nextImageIndex]}
+            alt="Next background"
+            className="w-full h-full object-cover slide-in"
+          />
+        </div>
+      )}
+
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-none bg-opacity-40"></div>
+
+      {/* Content — No animation on text or button */}
+      <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-4 md:px-8">
+        <h1 className="text-3xl md:text-5xl font-bold mb-6">
           {role === "mentee" ? (
             <>
-              Bridging Rwanda’s Youth with the{" "}
-              <span className="text-blue-400">Diaspora</span>
+              Bridging Rwanda’s Youth with the <br />
+              <span className="text-blue-300">Diaspora</span>
             </>
           ) : (
             <>
-              Share Your Expertise with{" "}
-              <span className="text-blue-400">Rwanda’s Future</span>
+              Share Your Expertise with <br />
+              <span className="text-blue-300">Rwanda’s Future</span>
             </>
           )}
         </h1>
 
-        {/* Descriptive Text */}
-        <p className="text-lg md:text-xl text-gray-200 max-w-3xl mx-auto leading-relaxed mb-8">
+        <p className="text-lg md:text-xl max-w-3xl mb-8">
           {role === "mentee"
             ? "Get mentorship, global insights, and real career opportunities from Rwandan professionals abroad."
             : "Give back by mentoring talented youth in Rwanda. Shape careers, share knowledge, and build the Rwanda we believe in."}
         </p>
 
-        {/* CTA Button */}
-        <div className="flex justify-center">
-          {/* Pass the navigate function as a prop */}
-          <HeroCTA role={role} navigate={navigate} />
-        </div>
+        <HeroCTA role={role} navigate={navigate} />
       </div>
-    </section>
+    </div>
   );
 };
 
-// HeroCTA now receives 'navigate' as a prop
 function HeroCTA({ role, navigate }) {
   if (role === "mentee") {
     return (
