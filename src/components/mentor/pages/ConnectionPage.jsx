@@ -44,13 +44,13 @@ const animations = `
 const mockSessions = [
   {
     id: 1,
-    mentee: "Ishema Keza",
+    mentee: "Umuhoza Keza",
     topic: "React State Management",
     date: "Sep 15",
     time: "10:00 AM",
     duration: 60,
     status: "upcoming",
-    avatar: "IK",
+    avatar: "UK",
     notes: "Review Redux and Context API patterns.",
   },
   {
@@ -66,13 +66,13 @@ const mockSessions = [
   },
   {
     id: 3,
-    mentee: "Umuhoza Ben",
+    mentee: "Tuyishime Ben",
     topic: "Machine Learning Basics",
     date: "Sep 17",
     time: "4:00 PM",
     duration: 90,
     status: "upcoming",
-    avatar: "UB",
+    avatar: "TB",
     notes: "Introduction to supervised vs. unsupervised learning.",
   },
   {
@@ -96,8 +96,8 @@ const mockConnections = {
   mentees: [
     {
       id: 1,
-      name: "Ishema Keza",
-      avatar: "IK",
+      name: "Umuhoza Keza",
+      avatar: "UK",
       field: "UI Design",
       company: "Tech Solutions Inc.",
       level: "Junior",
@@ -118,8 +118,8 @@ const mockConnections = {
     },
     {
       id: 3,
-      name: "Umuhoza Ben",
-      avatar: "UB",
+      name: "Tuyishime Ben",
+      avatar: "TB",
       field: "Software Development",
       company: "Innovate Hub",
       level: "Senior",
@@ -142,7 +142,7 @@ const mockConnections = {
   mentors: [
     {
       id: 1,
-      name: "Kambanda John",
+      name: "Kambanda Jean",
       avatar: "KJ",
       field: "UX Design",
       company: "Design Pro",
@@ -218,7 +218,7 @@ const TabNavigation = ({ tabs, activeTab, onTabChange }) => {
     <div className="flex space-x-4 border-b border-gray-200">
       {tabs.map((tab) => (
         <button
-          key={tab.id}
+          key={tab.id} // Added the key prop here
           className={`py-2 px-4 text-sm font-medium transition-colors duration-200 focus:outline-none ${
             activeTab === tab.id
               ? "border-b-2 border-blue-500 text-blue-600"
