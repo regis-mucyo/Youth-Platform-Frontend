@@ -4,7 +4,7 @@
   font-family: "Poppins", sans-serif;
 }
 
-/* Global color remap: make all green shades use blue values */
+/* Remap all green shades to blue */
 @theme {
   --color-green-50: var(--color-blue-50);
   --color-green-100: var(--color-blue-100);
@@ -19,3 +19,41 @@
   --color-green-950: var(--color-blue-950);
 }
 
+/*
+   🎬 CINEMATIC SLOW SLIDE ANIMATIONS
+   — Slow in, slow out, elegant easing
+   — 1.2s duration for luxurious feel
+   — Opacity fade for depth
+*/
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0.6;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutToLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0.6;
+  }
+}
+
+@layer utilities {
+  .slide-in {
+    animation: slideInFromRight 1.2s cubic-bezier(0.33, 1, 0.66, 1) forwards;
+  }
+
+  .slide-out {
+    animation: slideOutToLeft 1.2s cubic-bezier(0.33, 1, 0.66, 1) forwards;
+  }
+}
